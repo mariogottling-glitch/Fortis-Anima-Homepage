@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/base.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/styles.css">
+  <script src="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--surface-page, #FAF8F5); }
+    a { color: var(--fa-forest, #1E3A34); }
+    a:hover { color: var(--fa-gold, #B08A4F); }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(30,58,52,0.90);border-bottom:1px solid var(--border-on-dark)">
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);max-width:var(--container);margin:0 auto;padding:14px clamp(20px,4vw,40px);box-sizing:border-box">
+    <a href="#top" aria-label="Fortis Anima Consulting — home" style="display:inline-flex;align-items:center;flex:none">
+      <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="Fortis Anima Consulting" style="height:46px;width:auto;display:block">
+    </a>
+    <div style="display:flex;align-items:center;gap:clamp(18px,2.4vw,var(--space-6))">
+      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="4">
+        <a href="{{ link.href }}" style="font:var(--text-body-sm);font-weight:500;color:var(--text-on-dark-muted);text-decoration:none;transition:color var(--duration-quick) var(--ease-out)" style-hover="color:var(--fa-gold-soft)">{{ link.label }}</a>
+      </sc-for>
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="md" href="#contact" on-dark="{{ true }}" hint-size="180px,44px">Book a consultation</x-import>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" data-screen-label="Hero" style="position:relative;min-height:min(74vh,720px);background-image:url('uploads/ChatGPT Image 14. Juli 2026, 21_28_11.png');background-size:cover;background-position:center bottom;display:flex;align-items:center">
+    <div style="position:relative;width:100%;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(40px,5vh,72px) clamp(20px,4vw,40px);display:flex;justify-content:flex-end">
+      <div data-reveal="0" style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start;max-width:620px;width:100%">
+        <img src="uploads/Fortis Anima Logo-934af31b.png" alt="Fortis Anima Consulting" style="width:min(200px,45%);height:auto;display:block;margin-bottom:var(--space-2)">
+        <h1 style="margin:0;font:var(--text-h1);letter-spacing:var(--tracking-display);color:var(--fa-warm-white);text-wrap:balance">Your foundation in Sweden.</h1>
+        <p style="margin:0;font:var(--text-lead);color:rgba(247,244,239,0.80);max-width:46ch;text-wrap:pretty">We help entrepreneurs, businesses and international professionals establish, grow and thrive in Sweden — with practical expertise and personal support at every step.</p>
+        <div style="display:flex;gap:var(--space-4);flex-wrap:wrap;margin-top:var(--space-3)">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="lg" href="#contact" on-dark="{{ true }}" hint-size="220px,54px">Book a consultation</x-import>
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="ghost" size="lg" href="#services" on-dark="{{ true }}" hint-size="160px,54px">Explore our services</x-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" data-screen-label="About us" style="background:var(--surface-dark);position:relative;overflow:hidden">
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;top:50%;right:-120px;transform:translateY(-50%);width:min(560px,55vw);height:auto;opacity:0.05;pointer-events:none">
+    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,5vw,80px);align-items:center">
+      <div data-reveal="0" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+        <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">About us</p>
+        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark)">Your trusted partner in Sweden.</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:54ch;text-wrap:pretty">Fortis Anima Consulting was founded with a clear vision: helping businesses and professionals navigate the opportunities and challenges of working in Sweden.</p>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:54ch;text-wrap:pretty">Entering a new market is more than paperwork. It takes understanding the local business culture, building strong leadership, motivated teams and effective communication. We combine practical business expertise with cultural understanding to ensure long-term success.</p>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:54ch;text-wrap:pretty">Whether you are establishing your first Swedish company or expanding an established organisation into Scandinavia, we are your trusted partner.</p>
+        <p style="margin:0;font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1.4;color:var(--fa-gold-soft);font-style:italic">Sustainable growth is built on strong foundations, capable leaders and empowered people.</p>
+      </div>
+      <div data-reveal="120" style="height:min(60vh,600px);min-height:380px;border-radius:var(--radius-image);overflow:hidden">
+        <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo" shape="rect" placeholder="The team at work — natural daylight, candid" hint-size="100%,100%"></x-import>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" data-screen-label="Services" style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px)">
+    <div data-reveal="0" style="margin-bottom:var(--space-8)">
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.SectionHeader" overline="Our services" title="Practical support, end to end" description="Three practices that help you establish, lead and communicate in Sweden." hint-size="100%,180px"></x-import>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:var(--space-6)">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
+        <div data-reveal="{{ svc.delay }}" style="display:grid">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Card" hover="{{ true }}" padding="0" style="{{ cardStyle }}" hint-size="100%,440px">
+            <div style="position:relative;width:100%;aspect-ratio:16 / 10;overflow:hidden">
+              <img src="{{ svc.image }}" alt="{{ svc.alt }}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+              <span style="position:absolute;top:var(--space-4);left:var(--space-4);display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(30,58,52,0.86);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)">
+                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ svc.icon }}" size="24" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
+              </span>
+            </div>
+            <div style="padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start">
+              <h3 style="margin:0;font:var(--text-h3);color:var(--text-body)">{{ svc.title }}</h3>
+              <p style="margin:0;font:var(--text-body-sm);color:var(--text-muted);flex:1">{{ svc.description }}</p>
+              <a href="#contact" style="display:inline-flex;align-items:center;gap:8px;font:var(--text-body-sm);font-weight:500;color:var(--fa-forest);text-decoration:none;text-underline-offset:5px" style-hover="text-decoration:underline;color:var(--fa-gold)">
+                Book a consultation
+                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="arrow-right" size="20" color="var(--fa-forest)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
+              </a>
+            </div>
+          </x-import>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- ============ WHY CHOOSE ============ -->
+  <section id="why-us" data-screen-label="Why choose Fortis Anima" style="background:var(--surface-tint);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)">
+    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px)">
+      <div data-reveal="0" style="margin-bottom:var(--space-8)">
+        <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.SectionHeader" overline="Why Fortis Anima" title="Chosen for the long term" description="What clients value is rarely the paperwork. It is how it feels to have someone in your corner." hint-size="100%,180px"></x-import>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:var(--space-8) var(--space-7)">
+        <div data-reveal="0">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.IconCard" icon="award" title="Expertise" description="We understand both international business and the Swedish market." data-icons-ready="{{ iconsReady }}" hint-size="100%,160px"></x-import>
+        </div>
+        <div data-reveal="80">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.IconCard" icon="heart-handshake" title="Personalized support" description="Every client receives tailored solutions built around their specific goals." data-icons-ready="{{ iconsReady }}" hint-size="100%,160px"></x-import>
+        </div>
+        <div data-reveal="160">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.IconCard" icon="wrench" title="Practical experience" description="Our advice is based on real business experience and hands-on implementation." data-icons-ready="{{ iconsReady }}" hint-size="100%,160px"></x-import>
+        </div>
+        <div data-reveal="240">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.IconCard" icon="sprout" title="Long-term partnership" description="We don't just help you get started — we help you grow." data-icons-ready="{{ iconsReady }}" hint-size="100%,160px"></x-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section id="process" data-screen-label="Our process" style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(48px,6vw,96px);align-items:start">
+    <div data-reveal="0" style="position:sticky;top:120px">
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.SectionHeader" overline="Our process" title="A calm, precise path" description="Four stages, from first conversation to sustainable growth." hint-size="100%,220px"></x-import>
+    </div>
+    <div data-reveal="150">
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Timeline" steps="{{ timelineSteps }}" hint-size="100%,520px"></x-import>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT / FINAL CTA ============ -->
+  <section id="contact" data-screen-label="Contact" style="padding:0 clamp(20px,4vw,40px) clamp(88px,9vw,140px)">
+    <div data-reveal="0">
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.CTA" overline="Contact us" title="Ready to take the next step?" description="Get in touch today to discuss how we can support your business journey in Sweden. Let's build your future together." cta-label="Book a consultation" hint-size="100%,420px"></x-import>
+    </div>
+  </section>
+
+</main>
+
+<x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Footer" dc-props="{{ footerProps }}" hint-size="100%,380px"></x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;motion&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot; }
+}">
+class Component extends DCLogic {
+  state = { iconsReady: false };
+
+  componentDidMount() {
+    // Icons: Lucide UMD loads async from CDN — re-render icon consumers once ready.
+    this._poll = setInterval(() => {
+      if (window.lucide && window.lucide.icons) {
+        clearInterval(this._poll);
+        this.setState({ iconsReady: true });
+      }
+    }, 120);
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._motion = (this.props.motion ?? true) && !reduce;
+    if (!this._motion) return;
+
+    // Scroll reveals — progressive enhancement, applied to template wrappers only.
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.filter = 'none';
+          this._io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    const arm = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el._revealArmed) return;
+        el._revealArmed = true;
+        const r = el.getBoundingClientRect();
+        el.style.transition = 'opacity 600ms var(--ease-out), transform 600ms var(--ease-out), filter 600ms var(--ease-out)';
+        el.style.transitionDelay = (parseInt(el.dataset.reveal, 10) || 0) + 'ms';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(22px)';
+        el.style.filter = 'blur(5px)';
+        if (r.top < window.innerHeight * 0.9) {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.filter = 'none';
+          }));
+        } else {
+          this._io.observe(el);
+        }
+      });
+    };
+    requestAnimationFrame(arm);
+    this._armTimers = [setTimeout(arm, 800), setTimeout(arm, 2000)];
+    window.addEventListener('load', arm);
+    this._arm = arm;
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._poll);
+    if (this._io) this._io.disconnect();
+    (this._armTimers || []).forEach(clearTimeout);
+    if (this._arm) window.removeEventListener('load', this._arm);
+  }
+
+  renderVals() {
+    return {
+      iconsReady: this.state.iconsReady,
+
+      cardStyle: { height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' },
+
+      services: [
+        { delay: 0, icon: 'building-2', title: 'Company formation', image: 'assets/service-company-formation.png', alt: 'Advisors reviewing company registration documents with a client', description: 'From selecting the right legal structure to registration and practical advice — we simplify every step so you can focus on growing your business.' },
+        { delay: 90, icon: 'users', title: 'Team building & leadership', image: 'assets/service-team-leadership.png', alt: 'A leader facilitating a strategy session at a flipchart', description: 'Workshops, coaching and tailored programmes that strengthen collaboration, sharpen communication and develop confident leaders.' },
+        { delay: 180, icon: 'languages', title: 'Swedish language training', image: 'assets/service-swedish-language.png', alt: 'A Swedish language session in progress with a small group', description: 'Business Swedish for international professionals and teams — individual or group, online or on-site, paced around your work.' },
+      ],
+
+      navLinks: [
+        { label: 'About', href: '#about' },
+        { label: 'Services', href: '#services' },
+        { label: 'Why us', href: '#why-us' },
+        { label: 'Process', href: '#process' },
+        { label: 'Contact', href: '#contact' },
+      ],
+
+      timelineSteps: [
+        { title: 'Initial consultation', description: 'We discuss your goals, challenges and opportunities.' },
+        { title: 'Strategy development', description: 'Together we create a tailored roadmap for your business.' },
+        { title: 'Implementation', description: 'We support you throughout every stage of the process.' },
+        { title: 'Sustainable growth', description: 'Our partnership continues as your business develops.' },
+      ],
+
+      footerProps: {
+        tagline: 'Helping businesses succeed in Sweden.',
+        columns: [
+          { title: 'Services', links: ['Company formation', 'Team building & leadership', 'Swedish language training'] },
+          { title: 'Company', links: ['About', 'Why us', 'Process', 'Contact'] },
+          { title: 'Contact', links: ['hello@fortisanima.se', 'Stockholm, Sweden'] },
+        ],
+        note: '\u00A9 2026 Fortis Anima Consulting AB',
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

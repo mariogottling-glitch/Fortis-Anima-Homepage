@@ -1,0 +1,42 @@
+/* Fortis Anima — Spacing, radius, shadow, motion, layout tokens */
+:root {
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 160px;
+
+  /* Radius */
+  --radius-button: 14px;
+  --radius-card: 24px;
+  --radius-image: 28px;
+  --radius-input: 12px;
+
+  /* Shadows — very soft, blur over spread, never Material */
+  --shadow-soft: 0 2px 16px rgba(30, 58, 52, 0.05);
+  --shadow-card: 0 4px 28px rgba(30, 58, 52, 0.06);
+  --shadow-lift: 0 10px 40px rgba(30, 58, 52, 0.10);
+
+  /* Motion */
+  --duration-quick: 250ms; /* @kind other */
+  --duration-calm: 450ms; /* @kind other */
+  --duration-slow: 600ms; /* @kind other */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+
+  /* Layout */
+  --container: 1280px;
+  --content-width: 760px;
+  --section-pad: 140px;
+  --grid-columns: 12; /* @kind other */
+  --grid-gap: 32px;
+
+  /* Focus */
+  --focus-ring: 0 0 0 2px var(--surface-page), 0 0 0 4px var(--fa-gold);
+}
