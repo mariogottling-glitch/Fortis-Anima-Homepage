@@ -46,8 +46,10 @@
       .about-image-frame { height: min(50vh,420px) !important; border-radius: 80px 24px 24px 24px !important; }
       .about-image-badge { width: 64px !important; height: 64px !important; left: -18px !important; bottom: -18px !important; }
       .about-quote { max-width: none !important; }
-      #why-us > div { grid-template-columns: 1fr !important; }
-      #why-us > div > div:first-child { position: static !important; top: auto !important; }
+      .why-grid { grid-template-columns: 1fr !important; }
+      .why-panel { border-left: none !important; border-top: 1px solid var(--border-soft) !important; }
+      .why-panel:first-child { border-top: none !important; }
+      .why-cross { display: none !important; }
       #process-track { grid-template-columns: 1fr !important; gap: 0 !important; }
       #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
       #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
@@ -109,12 +111,27 @@
       12% { opacity: 0.85; }
       100% { transform: translateX(360%) rotate(8deg); opacity: 0; }
     }
-    .reason-row:last-child { border-bottom: 1px solid var(--border-soft); }
-    .reason-row { opacity: 0; transform: translateY(36px); filter: blur(4px); transition: opacity 680ms var(--ease-out), transform 680ms var(--ease-out), filter 680ms var(--ease-out), background 350ms var(--ease-out), border-color 350ms var(--ease-out); }
-    .reason-row.in { opacity: 1; transform: none; filter: none; }
-    .reason-row.in:hover { background: var(--surface-card); border-color: rgba(176,138,79,0.35); }
-    .reason-row:hover .reason-icon { background: rgba(176,138,79,0.14); border-color: rgba(176,138,79,0.45); }
-    @media (prefers-reduced-motion: reduce) { .reason-row { opacity: 1 !important; transform: none !important; filter: none !important; } }
+    /* ---- Why us: premium trust grid ---- */
+    .why-rule { width: 64px; height: 1px; background: linear-gradient(90deg, rgba(176,138,79,0), var(--fa-gold), rgba(176,138,79,0)); border: none; }
+    .why-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+    .why-panel { position: relative; overflow: hidden; padding: clamp(48px,5vw,72px) clamp(32px,4vw,56px); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); border-top: 1px solid var(--border-soft); border-left: 1px solid var(--border-soft); will-change: transform; }
+    .why-panel:nth-child(odd) { border-left: none; }
+    .why-panel:nth-child(-n+2) { border-top: none; }
+    @media (prefers-reduced-motion: no-preference) { .why-panel { transition: transform 380ms cubic-bezier(0.16,1,0.3,1); } }
+    .why-panel-spotlight { position: absolute; inset: 0; opacity: 0; pointer-events: none; transition: opacity 400ms var(--ease-out); background: radial-gradient(360px circle at var(--mx,50%) var(--my,50%), rgba(200,169,106,0.16), transparent 68%); }
+    .why-panel-border { position: absolute; inset: 0; border: 1px solid transparent; pointer-events: none; transition: border-color 400ms var(--ease-out); }
+    .why-panel-sheen { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .why-panel-sheen::after { content: ""; position: absolute; top: -30%; left: -60%; width: 35%; height: 160%; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 65%, transparent 100%); transform: translateX(-20%) rotate(8deg); opacity: 0; }
+    @media (prefers-reduced-motion: no-preference) { .why-panel-sheen.why-sheen-play::after { animation: svcSheenSweep 850ms cubic-bezier(0.16,1,0.3,1); } }
+    .why-panel-num { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--fa-gold); }
+    .why-panel-icon { display: inline-flex; margin-top: var(--space-2); }
+    .why-panel-title { margin: 0; font: 500 clamp(24px,2.2vw,30px)/1.25 var(--font-display); color: var(--fa-forest); transition: color 300ms var(--ease-out); }
+    .why-panel-desc { margin: 0; font: var(--text-body-sm); color: var(--text-muted); max-width: 36ch; text-wrap: pretty; }
+    .why-cross { position: absolute; width: 13px; height: 13px; pointer-events: none; z-index: 2; transform: translate(-50%,-50%); }
+    .why-cross::before, .why-cross::after { content: ""; position: absolute; background: rgba(176,138,79,0.38); }
+    .why-cross::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
+    .why-cross::after { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
+    .why-stat-number { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(64px,9vw,120px); line-height: 1; color: var(--fa-forest); letter-spacing: var(--tracking-display); }
     @media (max-width: 1180px) { #top [data-hero-side] { display: none !important; } }
     @keyframes heroScroll { 0% { opacity:0; transform:translateY(-2px); } 30% { opacity:1; } 100% { opacity:0; transform:translateY(12px); } }
     @keyframes nodeGlow {
@@ -274,42 +291,43 @@
   </section>
 
   <!-- ============ WHY CHOOSE ============ -->
-  <section id="why-us" data-screen-label="Why choose Fortis Anima" style="background:var(--surface-tint);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)">
-    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(40px,5vw,88px);align-items:start">
+  <section id="why-us" data-screen-label="Why choose Fortis Anima" style="background:var(--surface-tint);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);position:relative;overflow:hidden">
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-8%;left:-150px;width:min(480px,46vw);height:auto;opacity:0.035;pointer-events:none">
+    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(120px,12vw,200px) clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:clamp(80px,9vw,128px)">
 
-      <div data-reveal="0" style="position:sticky;top:120px;display:flex;flex-direction:column;gap:var(--space-6)">
-        <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start">
-          <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Why Fortis Anima</p>
-          <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Chosen for the long term</h2>
-          <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:44ch;text-wrap:pretty">What clients value is rarely the paperwork. It is how it feels to have someone in your corner — before, during and long after the launch.</p>
-        </div>
-        <div style="position:relative">
-          <div style="height:min(46vh,420px);min-height:300px;border-radius:var(--radius-image);overflow:hidden;box-shadow:var(--shadow-lift)">
-            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="why-photo" shape="rect" src="uploads/why-advisor-conversation.jpg" placeholder="Client and advisor in conversation — warm, natural daylight" hint-size="100%,100%"></x-import>
-          </div>
-          <div style="position:absolute;bottom:clamp(-18px,-2vw,-26px);left:clamp(-10px,-1.5vw,-22px);background:var(--surface-dark);border-radius:var(--radius-card);padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-lift);display:flex;flex-direction:column;gap:4px;max-width:230px">
-            <span style="font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1;color:var(--fa-gold-soft)">96%</span>
-            <span style="font:var(--text-caption);color:var(--text-on-dark-muted)">of clients continue working with us year after year</span>
-          </div>
-        </div>
+      <div data-reveal="0" style="max-width:640px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-5)">
+        <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Why Fortis Anima</p>
+        <div class="why-rule" aria-hidden="true"></div>
+        <h2 style="margin:0;font:500 clamp(36px,4vw,54px)/1.12 var(--font-display);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Chosen for the long term</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:44ch;text-wrap:pretty">What clients value is rarely the paperwork. It is how it feels to have someone in your corner — before, during and long after the launch.</p>
       </div>
 
-      <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+      <div class="why-grid" data-reveal="100">
+        <span class="why-cross" aria-hidden="true" style="top:0;left:0"></span>
+        <span class="why-cross" aria-hidden="true" style="top:0;left:100%"></span>
+        <span class="why-cross" aria-hidden="true" style="top:50%;left:50%"></span>
+        <span class="why-cross" aria-hidden="true" style="top:100%;left:0"></span>
+        <span class="why-cross" aria-hidden="true" style="top:100%;left:100%"></span>
         <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
-          <li data-scroll-item="1" class="reason-row" style="position:relative;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,2.6vw,40px);padding:clamp(24px,3vw,36px) clamp(12px,2vw,28px);border-top:1px solid var(--border-soft);border-radius:var(--radius-card)">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-4)">
-              <span style="font-family:var(--font-display);font-weight:500;font-size:26px;line-height:1;color:var(--fa-gold)">{{ r.num }}</span>
-              <span class="reason-icon" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--surface-card);border:1px solid var(--border-soft);transition:background 350ms var(--ease-out), border-color 350ms var(--ease-out)">
-                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ r.icon }}" size="24" color="var(--fa-forest)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
-              </span>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:10px;padding-top:2px">
-              <h3 style="margin:0;font:var(--text-h4);color:var(--text-body)">{{ r.title }}</h3>
-              <p style="margin:0;font:var(--text-body-sm);color:var(--text-muted);max-width:48ch;text-wrap:pretty">{{ r.description }}</p>
-            </div>
-          </li>
+          <div class="why-panel">
+            <span aria-hidden="true" class="why-panel-spotlight"></span>
+            <span aria-hidden="true" class="why-panel-sheen"></span>
+            <span aria-hidden="true" class="why-panel-border"></span>
+            <span class="why-panel-num">{{ r.num }}</span>
+            <span class="why-panel-icon">
+              <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ r.icon }}" size="32" color="var(--fa-gold)" data-icons-ready="{{ iconsReady }}" hint-size="32px,32px"></x-import>
+            </span>
+            <h3 class="why-panel-title">{{ r.title }}</h3>
+            <p class="why-panel-desc">{{ r.description }}</p>
+          </div>
         </sc-for>
-      </ol>
+      </div>
+
+      <div data-reveal="180" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-4)">
+        <div class="why-rule" aria-hidden="true"></div>
+        <p class="why-stat-number">96%</p>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted)">of clients continue working with us year after year</p>
+      </div>
 
     </div>
   </section>
@@ -456,21 +474,65 @@ class Component extends DCLogic {
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this._motion = (this.props.motion ?? true) && !reduce;
 
-    // "Why us" reasons — build up individually as each row scrolls into view
-    const rows = document.querySelectorAll('#why-us .reason-row');
-    if (!this._motion) {
-      rows.forEach((el) => el.classList.add('in'));
-    } else {
-      this._rio = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('in');
-            this._rio.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.25, rootMargin: '0px 0px -12% 0px' });
-      rows.forEach((el) => this._rio.observe(el));
-    }
+    // "Why us" panels: soft lift + cursor-tracked spotlight + one-shot sheen,
+    // same JS-driven-descendant-state approach as the service cards below
+    // (and the same reason: plain CSS descendant hover rules don't reliably
+    // win this DC runtime's own re-render pass). Border/spotlight/title
+    // color feedback runs regardless of motion; the lift and sheen are
+    // motion-gated.
+    this._whyCleanup = [];
+    document.querySelectorAll('.why-panel').forEach((panel) => {
+      const spotlight = panel.querySelector('.why-panel-spotlight');
+      const border = panel.querySelector('.why-panel-border');
+      const sheen = panel.querySelector('.why-panel-sheen');
+      const title = panel.querySelector('.why-panel-title');
+      let raf = null;
+
+      const setPos = (e) => {
+        const r = panel.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        panel.style.setProperty('--mx', x.toFixed(1) + '%');
+        panel.style.setProperty('--my', y.toFixed(1) + '%');
+      };
+      const onMove = (e) => {
+        if (!this._motion || raf != null) return;
+        raf = requestAnimationFrame(() => { raf = null; setPos(e); });
+      };
+      const onEnter = (e) => {
+        if (spotlight) spotlight.style.opacity = '1';
+        if (border) border.style.borderColor = 'rgba(200,169,106,0.4)';
+        if (title) title.style.color = 'var(--fa-forest-bright)';
+        if (!this._motion) return;
+        panel.style.transform = 'translateY(-6px)';
+        setPos(e);
+        if (sheen) {
+          sheen.classList.remove('why-sheen-play');
+          void sheen.offsetWidth;
+          sheen.classList.add('why-sheen-play');
+        }
+      };
+      const onLeave = () => {
+        if (raf != null) { cancelAnimationFrame(raf); raf = null; }
+        panel.style.transform = '';
+        if (spotlight) spotlight.style.opacity = '';
+        if (border) border.style.borderColor = '';
+        if (title) title.style.color = '';
+      };
+      const onSheenEnd = () => { if (sheen) sheen.classList.remove('why-sheen-play'); };
+
+      panel.addEventListener('pointermove', onMove);
+      panel.addEventListener('pointerenter', onEnter);
+      panel.addEventListener('pointerleave', onLeave);
+      if (sheen) sheen.addEventListener('animationend', onSheenEnd);
+      this._whyCleanup.push(() => {
+        panel.removeEventListener('pointermove', onMove);
+        panel.removeEventListener('pointerenter', onEnter);
+        panel.removeEventListener('pointerleave', onLeave);
+        if (sheen) sheen.removeEventListener('animationend', onSheenEnd);
+        if (raf != null) cancelAnimationFrame(raf);
+      });
+    });
 
     // Service cards: hover feedback (icon/title/desc/link color, glow,
     // border, shadow) plus, when motion is allowed, a cursor-tracked tilt +
@@ -629,13 +691,13 @@ class Component extends DCLogic {
     (this._armTimers || []).forEach(clearTimeout);
     if (this._arm) window.removeEventListener('load', this._arm);
     if (this._pio) this._pio.disconnect();
-    if (this._rio) this._rio.disconnect();
     if (this._onHeader) window.removeEventListener('scroll', this._onHeader);
     const menuToggle = document.getElementById('menu-toggle');
     const navLinksEl = document.getElementById('nav-links');
     if (menuToggle && this._onMenuToggle) menuToggle.removeEventListener('click', this._onMenuToggle);
     if (navLinksEl && this._closeNav) navLinksEl.querySelectorAll('a').forEach((a) => a.removeEventListener('click', this._closeNav));
     document.body.classList.remove('nav-open');
+    (this._whyCleanup || []).forEach((fn) => fn());
     (this._svcCleanup || []).forEach((fn) => fn());
   }
 
