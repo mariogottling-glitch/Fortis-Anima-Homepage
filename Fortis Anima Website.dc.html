@@ -37,7 +37,15 @@
     #menu-toggle.open span:nth-child(2) { opacity: 0; }
     #menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     @media (max-width: 860px) {
-      #about > div { grid-template-columns: 1fr !important; }
+      .about-editorial { grid-template-columns: 1fr !important; }
+      .about-headline-block, .about-image-wrap, .about-copy-block, .about-quote-block { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0 !important; }
+      .about-headline-block { margin-bottom: clamp(32px,6vw,48px) !important; }
+      .about-image-wrap { margin-bottom: clamp(32px,6vw,48px) !important; }
+      .about-copy-block { margin-bottom: clamp(32px,6vw,48px) !important; }
+      .about-headline { max-width: none !important; }
+      .about-image-frame { height: min(50vh,420px) !important; border-radius: 80px 24px 24px 24px !important; }
+      .about-image-badge { width: 64px !important; height: 64px !important; left: -18px !important; bottom: -18px !important; }
+      .about-quote { max-width: none !important; }
       #why-us > div { grid-template-columns: 1fr !important; }
       #why-us > div > div:first-child { position: static !important; top: auto !important; }
       #process-track { grid-template-columns: 1fr !important; gap: 0 !important; }
@@ -57,6 +65,20 @@
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
     #site-header.scrolled { background: rgba(30,58,52,0.72) !important; border-bottom-color: var(--border-on-dark) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    /* ---- About: editorial layout ---- */
+    .about-editorial { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(20px,3vw,40px); row-gap: 0; }
+    .about-rule { width: 56px; height: 1px; background: linear-gradient(90deg, var(--fa-gold), rgba(176,138,79,0)); border: none; }
+    .about-headline-block { grid-column: 1 / 9; grid-row: 1; align-self: start; display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; margin-bottom: clamp(64px,7vw,104px); }
+    .about-headline { margin: 0; font: 500 clamp(42px,5.2vw,68px)/1.08 var(--font-display); letter-spacing: var(--tracking-display); color: var(--fa-forest); max-width: 15ch; text-wrap: balance; }
+    .about-image-wrap { grid-column: 8 / 13; grid-row: 1 / 3; align-self: start; margin-top: clamp(48px,6vw,88px); position: relative; z-index: 2; }
+    .about-image-frame { position: relative; height: min(58vh,580px); min-height: 380px; border-radius: 120px 28px 28px 28px; overflow: hidden; box-shadow: 0 40px 80px -28px rgba(30,58,52,0.28), 0 18px 36px -16px rgba(30,58,52,0.16); }
+    .about-image-scrim { position: absolute; inset: 0; background: linear-gradient(200deg, rgba(30,58,52,0) 55%, rgba(20,30,27,0.35) 100%); pointer-events: none; }
+    .about-image-edge { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(247,244,239,0.18); pointer-events: none; }
+    .about-image-badge { position: absolute; left: -28px; bottom: -28px; z-index: 3; width: 76px; height: 76px; border-radius: 50%; background: var(--surface-dark); border: 1px solid rgba(200,169,106,0.4); box-shadow: 0 16px 32px -12px rgba(30,58,52,0.35); display: flex; align-items: center; justify-content: center; }
+    .about-copy-block { grid-column: 2 / 8; grid-row: 2; align-self: start; margin-top: clamp(32px,4vw,48px); display: flex; flex-direction: column; gap: var(--space-4); }
+    .about-copy-block p { margin: 0; font: var(--text-body-md); color: var(--text-muted); max-width: 42ch; text-wrap: pretty; }
+    .about-quote-block { grid-column: 3 / 12; grid-row: 3; margin-top: clamp(88px,10vw,140px); display: flex; flex-direction: column; gap: var(--space-6); }
+    .about-quote { margin: 0; padding-left: clamp(24px,3vw,40px); border-left: 1px solid var(--fa-gold); font: 500 clamp(28px,3.2vw,42px)/1.35 var(--font-display); font-style: italic; color: var(--fa-forest); max-width: 26ch; text-wrap: pretty; }
     /* ---- Premium service-card interaction ---- */
     .svc-card { border: 1px solid var(--border-on-dark); transition: border-color 380ms cubic-bezier(0.16,1,0.3,1), box-shadow 380ms cubic-bezier(0.16,1,0.3,1); will-change: transform; }
     .svc-card:hover, .svc-card:focus-visible { border-color: rgba(200,169,106,0.55); box-shadow: 0 30px 60px -24px rgba(0,0,0,0.55), 0 10px 24px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(200,169,106,0.14), 0 0 36px -6px rgba(200,169,106,0.22); }
@@ -180,23 +202,37 @@
 
   <!-- ============ ABOUT ============ -->
   <section id="about" data-screen-label="About us" style="background:var(--surface-tint);position:relative;overflow:hidden;border-bottom:1px solid var(--border-soft)">
-    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;top:50%;right:-130px;transform:translateY(-50%);width:min(520px,50vw);height:auto;opacity:0.04;pointer-events:none">
-    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(40px,5vw,88px);align-items:center;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)">
-      <div data-reveal="0" style="position:relative">
-        <div style="height:min(64vh,640px);min-height:420px;border-radius:var(--radius-image);overflow:hidden;box-shadow:var(--shadow-lift)">
-          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo" shape="rect" src="uploads/about-team-meeting.jpg" placeholder="Scandinavian office — natural daylight, candid team moment" hint-size="100%,100%"></x-import>
-        </div>
-        <!-- floating credential chip -->
-        
-      </div>
-      <div data-reveal="120" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;top:-6%;right:-160px;width:min(620px,54vw);height:auto;opacity:0.035;pointer-events:none">
+    <div class="about-editorial" style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(120px,12vw,200px) clamp(20px,4vw,40px)">
+
+      <div class="about-headline-block" data-reveal="0">
         <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">About us</p>
-        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Your trusted partner in Sweden.</h2>
-        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Fortis Anima Consulting was founded with a clear vision: helping businesses and professionals navigate the opportunities and challenges of working in Sweden.</p>
-        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Entering a new market is more than paperwork. It takes understanding the local business culture, building strong leadership, motivated teams and effective communication. We combine practical expertise with cultural understanding to ensure long-term success.</p>
-        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Whether you are establishing your first Swedish company or expanding into Scandinavia, we are your trusted partner.</p>
-        <blockquote style="margin:var(--space-3) 0 0;padding-left:var(--space-5);border-left:2px solid var(--fa-gold);font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1.4;color:var(--fa-forest);font-style:italic;text-wrap:pretty">Sustainable growth is built on strong foundations, capable leaders and empowered people.</blockquote>
+        <div class="about-rule" aria-hidden="true"></div>
+        <h2 class="about-headline">Your trusted partner in Sweden.</h2>
       </div>
+
+      <div class="about-image-wrap" data-reveal="140">
+        <div class="about-image-frame">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo" shape="rect" src="uploads/about-team-meeting.jpg" placeholder="Scandinavian office — natural daylight, candid team moment" hint-size="100%,100%"></x-import>
+          <span aria-hidden="true" class="about-image-scrim"></span>
+          <span aria-hidden="true" class="about-image-edge"></span>
+        </div>
+        <span aria-hidden="true" class="about-image-badge">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="sprout" size="26" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="26px,26px"></x-import>
+        </span>
+      </div>
+
+      <div class="about-copy-block" data-reveal="220">
+        <p>Fortis Anima Consulting was founded with a clear vision: helping businesses and professionals navigate the opportunities and challenges of working in Sweden.</p>
+        <p>Entering a new market is more than paperwork. It takes understanding the local business culture, building strong leadership, motivated teams and effective communication. We combine practical expertise with cultural understanding to ensure long-term success.</p>
+        <p>Whether you are establishing your first Swedish company or expanding into Scandinavia, we are your trusted partner.</p>
+      </div>
+
+      <div class="about-quote-block" data-reveal="280">
+        <div class="about-rule" aria-hidden="true"></div>
+        <blockquote class="about-quote">Sustainable growth is built on strong foundations, capable leaders and empowered people.</blockquote>
+      </div>
+
     </div>
   </section>
 
