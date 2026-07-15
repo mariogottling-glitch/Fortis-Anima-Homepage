@@ -44,12 +44,15 @@
       #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
       #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
       #site-header nav { justify-content: space-between !important; }
-      #header-brand { display: inline-flex !important; }
+      #header-brand { display: inline-flex !important; opacity: 0; pointer-events: none; transition: opacity 250ms var(--ease-out); }
+      #site-header.scrolled #header-brand { opacity: 1; pointer-events: auto; }
       #menu-toggle { display: inline-flex !important; }
       #nav-links { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; flex-direction: column !important; align-items: flex-start !important; justify-content: center !important; gap: var(--space-6) !important; background: rgba(20,30,27,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: clamp(80px,12vh,120px) clamp(28px,8vw,48px) clamp(40px,8vh,60px); box-sizing: border-box; transform: translateX(100%); opacity: 0; visibility: hidden; transition: transform 380ms var(--ease-out), opacity 380ms var(--ease-out), visibility 0s 380ms; }
       #nav-links.open { transform: translateX(0); opacity: 1; visibility: visible; transition: transform 380ms var(--ease-out), opacity 380ms var(--ease-out), visibility 0s; }
       #nav-links a { font-size: 22px !important; }
       #process-track li { flex-direction: row !important; align-items: flex-start !important; gap: var(--space-5) !important; padding-bottom: clamp(32px,6vw,56px); }
+      .hero-scroll-cue { display: none !important; }
+      #top [data-hero="6"] { gap: 12px 20px !important; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
@@ -141,7 +144,7 @@
     </div>
 
     <!-- scroll cue -->
-    <a href="#about" aria-label="Scroll to explore" style="position:absolute;right:clamp(20px,4vw,44px);bottom:clamp(28px,4vh,44px);z-index:1;display:inline-flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:rgba(247,244,239,0.7)" style-hover="color:var(--fa-gold-soft)">
+    <a href="#about" class="hero-scroll-cue" aria-label="Scroll to explore" style="position:absolute;right:clamp(20px,4vw,44px);bottom:clamp(28px,4vh,44px);z-index:1;display:inline-flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:rgba(247,244,239,0.7)" style-hover="color:var(--fa-gold-soft)">
       <span style="font:var(--text-caption);letter-spacing:0.08em;text-transform:uppercase">Scroll</span>
       <span data-hero-cue="1" style="display:inline-flex;align-items:flex-start;justify-content:center;width:26px;height:42px;border:1px solid rgba(247,244,239,0.45);border-radius:14px;padding-top:8px;box-sizing:border-box">
         <span style="width:3px;height:8px;border-radius:2px;background:var(--fa-gold-soft);animation:heroScroll 1.8s var(--ease-out) infinite"></span>
