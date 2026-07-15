@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/base.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/styles.css">
+  <script src="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--surface-page, #FAF8F5); }
+    a { color: var(--fa-forest, #1E3A34); }
+    a:hover { color: var(--fa-gold, #B08A4F); }
+    @media (max-width: 860px) {
+      #about > div { grid-template-columns: 1fr !important; }
+      #why-us > div { grid-template-columns: 1fr !important; }
+      #process-track { grid-template-columns: 1fr !important; gap: 0 !important; }
+      #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
+      #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
+      #process-track li { flex-direction: row !important; align-items: flex-start !important; gap: var(--space-5) !important; padding-bottom: clamp(32px,6vw,56px); }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+    @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
+    #site-header.scrolled { background: rgba(30,58,52,0.72) !important; border-bottom-color: var(--border-on-dark) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .svc-card:hover { transform: translateY(-6px); border-color: rgba(176,138,79,0.55); box-shadow: 0 24px 48px -24px rgba(0,0,0,0.6); }
+    .svc-card:hover .svc-img { transform: scale(1.06); }
+    .svc-card:hover .svc-link { gap: 14px; }
+    .svc-card:focus-visible { outline: none; border-color: var(--fa-gold); box-shadow: 0 0 0 3px rgba(176,138,79,0.4); }
+    .reason-row:last-child { border-bottom: 1px solid var(--border-soft); }
+    .reason-row { opacity: 0; transform: translateY(36px); filter: blur(4px); transition: opacity 680ms var(--ease-out), transform 680ms var(--ease-out), filter 680ms var(--ease-out), background 350ms var(--ease-out), border-color 350ms var(--ease-out); }
+    .reason-row.in { opacity: 1; transform: none; filter: none; }
+    .reason-row.in:hover { background: var(--surface-card); border-color: rgba(176,138,79,0.35); }
+    .reason-row:hover .reason-icon { background: rgba(176,138,79,0.14); border-color: rgba(176,138,79,0.45); }
+    @media (prefers-reduced-motion: reduce) { .reason-row { opacity: 1 !important; transform: none !important; filter: none !important; } }
+    @media (max-width: 1180px) { #top [data-hero-side] { display: none !important; } }
+    @keyframes heroScroll { 0% { opacity:0; transform:translateY(-2px); } 30% { opacity:1; } 100% { opacity:0; transform:translateY(12px); } }
+    @keyframes nodeGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(176,138,79,0.0), 0 0 10px 1px rgba(176,138,79,0.25); border-color: rgba(176,138,79,0.45); }
+      50% { box-shadow: 0 0 0 6px rgba(176,138,79,0.06), 0 0 22px 4px rgba(176,138,79,0.55); border-color: rgba(176,138,79,0.85); }
+    }
+    #process-track > li:last-child > div:first-child > span:first-child { animation: nodeGlow 2.8s var(--ease-out) infinite; }
+    #process-track > li:last-child > div:first-child > span:first-child > span { background: rgba(176,138,79,0.20); }
+    @media (prefers-reduced-motion: reduce) { #process-track > li:last-child > div:first-child > span:first-child { animation: none; box-shadow: 0 0 14px 2px rgba(176,138,79,0.4); } }
+    [data-hero] { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+    @media (max-width: 860px) { #top [data-hero-tree] { opacity: 0.05 !important; right: -30% !important; height: 78% !important; } }
+    .hero-in [data-hero] { opacity: 1; transform: none; filter: none; transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out), filter 700ms var(--ease-out); }
+    .hero-in [data-hero="1"] { transition-delay: 60ms; }
+    .hero-in [data-hero="2"] { transition-delay: 160ms; }
+    .hero-in [data-hero="3"] { transition-delay: 260ms; }
+    .hero-in [data-hero="4"] { transition-delay: 420ms; }
+    .hero-in [data-hero="5"] { transition-delay: 560ms; }
+    .hero-in [data-hero="6"] { transition-delay: 720ms; }
+    @media (prefers-reduced-motion: reduce) {
+      [data-hero] { opacity: 1 !important; transform: none !important; filter: none !important; }
+      #top > div[aria-hidden] { animation: none !important; }
+    }
+  </style>
+</helmet>
+
+<header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:60;background:transparent;border-bottom:1px solid transparent;transition:background var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), backdrop-filter var(--duration-base) var(--ease-out)">
+  <nav style="display:flex;align-items:center;justify-content:center;gap:var(--space-6);max-width:var(--container);margin:0 auto;padding:18px clamp(20px,4vw,40px);box-sizing:border-box">
+    <div style="display:flex;align-items:center;gap:clamp(18px,2.4vw,var(--space-6))">
+      <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="4">
+        <a href="{{ link.href }}" style="font:var(--text-body-sm);font-weight:500;color:rgba(247,244,239,0.82);text-decoration:none;transition:color var(--duration-quick) var(--ease-out)" style-hover="color:var(--fa-gold-soft)">{{ link.label }}</a>
+      </sc-for>
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="md" href="#contact" on-dark="{{ true }}" hint-size="180px,44px">Book a consultation</x-import>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" data-screen-label="Hero" style="position:relative;min-height:min(92vh,880px);overflow:hidden;display:flex;align-items:flex-end;isolation:isolate">
+    <div aria-hidden="true" style="position:absolute;inset:0;z-index:-2;background-image:url('uploads/ChatGPT Image 14. Juli 2026, 21_28_11.png');background-size:cover;background-position:center 40%;animation:heroZoom 22s var(--ease-out) forwards"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(30,58,52,0.30) 0%,rgba(30,58,52,0.05) 32%,rgba(30,58,52,0.55) 78%,rgba(30,58,52,0.86) 100%)"></div>
+
+    <!-- faint oversized brand tree, bleeding off the right edge -->
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" data-hero-tree="1" style="position:absolute;top:50%;right:clamp(-140px,-6vw,-40px);transform:translateY(-50%);height:min(118%,1180px);width:auto;opacity:0.07;pointer-events:none;z-index:-1;filter:drop-shadow(0 0 40px rgba(0,0,0,0.15))">
+
+    <div style="position:relative;width:100%;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(48px,7vh,104px) clamp(20px,4vw,40px)">
+      <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start;max-width:720px;width:100%">
+        <img data-hero="1" src="uploads/Fortis Anima Logo-934af31b.png" alt="Fortis Anima Consulting" style="width:min(150px,38%);height:auto;display:block;margin-bottom:var(--space-3)">
+        <p data-hero="2" style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Consulting for Sweden</p>
+        <h1 data-hero="3" style="margin:0;font:var(--text-display);letter-spacing:var(--tracking-display);color:var(--fa-warm-white);text-wrap:balance">Your foundation<br>in Sweden.</h1>
+        <p data-hero="4" style="margin:0;font:var(--text-lead);color:rgba(247,244,239,0.82);max-width:50ch;text-wrap:pretty">We help entrepreneurs, businesses and international professionals establish, grow and thrive in Sweden — with practical expertise and personal support at every step.</p>
+        <div data-hero="5" style="display:flex;gap:var(--space-4);flex-wrap:wrap;margin-top:var(--space-3)">
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="lg" href="#contact" on-dark="{{ true }}" hint-size="220px,54px">Book a consultation</x-import>
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="ghost" size="lg" href="#services" on-dark="{{ true }}" hint-size="160px,54px">Explore our services</x-import>
+        </div>
+
+        <!-- animated trust strip -->
+        <div data-hero="6" style="display:flex;align-items:center;gap:clamp(16px,2.4vw,36px);flex-wrap:wrap;margin-top:var(--space-6);padding-top:var(--space-5);border-top:1px solid var(--border-on-dark);align-self:stretch">
+          <span style="font:var(--text-caption);color:rgba(247,244,239,0.55);white-space:nowrap">Trusted for</span>
+          <sc-for list="{{ trustMarkers }}" as="m" hint-placeholder-count="3">
+            <span style="display:inline-flex;align-items:center;gap:10px;font:var(--text-body-sm);font-weight:500;color:rgba(247,244,239,0.9);white-space:nowrap">
+              <span aria-hidden="true" style="width:6px;height:6px;border-radius:50%;background:var(--fa-gold);flex:none;box-shadow:0 0 10px rgba(176,138,79,0.7)"></span>
+              {{ m }}
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <!-- scroll cue -->
+    <a href="#about" aria-label="Scroll to explore" style="position:absolute;right:clamp(20px,4vw,44px);bottom:clamp(28px,4vh,44px);z-index:1;display:inline-flex;flex-direction:column;align-items:center;gap:10px;text-decoration:none;color:rgba(247,244,239,0.7)" style-hover="color:var(--fa-gold-soft)">
+      <span style="font:var(--text-caption);letter-spacing:0.08em;text-transform:uppercase">Scroll</span>
+      <span data-hero-cue="1" style="display:inline-flex;align-items:flex-start;justify-content:center;width:26px;height:42px;border:1px solid rgba(247,244,239,0.45);border-radius:14px;padding-top:8px;box-sizing:border-box">
+        <span style="width:3px;height:8px;border-radius:2px;background:var(--fa-gold-soft);animation:heroScroll 1.8s var(--ease-out) infinite"></span>
+      </span>
+    </a>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section id="about" data-screen-label="About us" style="background:var(--surface-tint);position:relative;overflow:hidden;border-bottom:1px solid var(--border-soft)">
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;top:50%;right:-130px;transform:translateY(-50%);width:min(520px,50vw);height:auto;opacity:0.04;pointer-events:none">
+    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(40px,5vw,88px);align-items:center;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)">
+      <div data-reveal="0" style="position:relative">
+        <div style="height:min(64vh,640px);min-height:420px;border-radius:var(--radius-image);overflow:hidden;box-shadow:var(--shadow-lift)">
+          <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="about-photo" shape="rect" placeholder="Scandinavian office — natural daylight, candid team moment" hint-size="100%,100%"></x-import>
+        </div>
+        <!-- floating credential chip -->
+        
+      </div>
+      <div data-reveal="120" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+        <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">About us</p>
+        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Your trusted partner in Sweden.</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Fortis Anima Consulting was founded with a clear vision: helping businesses and professionals navigate the opportunities and challenges of working in Sweden.</p>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Entering a new market is more than paperwork. It takes understanding the local business culture, building strong leadership, motivated teams and effective communication. We combine practical expertise with cultural understanding to ensure long-term success.</p>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:52ch;text-wrap:pretty">Whether you are establishing your first Swedish company or expanding into Scandinavia, we are your trusted partner.</p>
+        <blockquote style="margin:var(--space-3) 0 0;padding-left:var(--space-5);border-left:2px solid var(--fa-gold);font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1.4;color:var(--fa-forest);font-style:italic;text-wrap:pretty">Sustainable growth is built on strong foundations, capable leaders and empowered people.</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICES ============ -->
+  <section id="services" data-screen-label="Services" style="background:var(--surface-dark);position:relative;overflow:hidden">
+    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px)">
+      <div data-reveal="0" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-6);margin-bottom:var(--space-8)">
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:640px">
+          <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Our services</p>
+          <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark)">Practical support, end to end</h2>
+        </div>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:36ch;text-wrap:pretty">Three practices that help you establish, lead and communicate in Sweden.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--space-6)">
+        <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
+          <a href="#contact" class="svc-card" data-reveal="{{ svc.delay }}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;border-radius:var(--radius-card);overflow:hidden;text-decoration:none;border:1px solid var(--border-on-dark);transition:transform 450ms var(--ease-out), border-color 450ms var(--ease-out), box-shadow 450ms var(--ease-out)">
+            <img src="{{ svc.image }}" alt="{{ svc.alt }}" loading="lazy" class="svc-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms var(--ease-out)">
+            <span aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,58,52,0.15) 0%,rgba(30,58,52,0.05) 30%,rgba(24,36,32,0.72) 68%,rgba(20,30,27,0.94) 100%)"></span>
+            <span style="position:absolute;top:var(--space-5);left:var(--space-5);display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:rgba(20,30,27,0.55);border:1px solid rgba(247,244,239,0.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">
+              <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ svc.icon }}" size="24" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
+            </span>
+            <span style="position:absolute;top:var(--space-5);right:var(--space-6);font-family:var(--font-display);font-weight:500;font-size:26px;line-height:1;color:rgba(247,244,239,0.5)">{{ svc.num }}</span>
+            <div style="position:relative;padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start">
+              <h3 style="margin:0;font:var(--text-h3);color:var(--fa-warm-white)">{{ svc.title }}</h3>
+              <p style="margin:0;font:var(--text-body-sm);color:rgba(247,244,239,0.76);text-wrap:pretty">{{ svc.description }}</p>
+              <span class="svc-link" style="display:inline-flex;align-items:center;gap:8px;margin-top:var(--space-2);font:var(--text-body-sm);font-weight:500;color:var(--fa-gold-soft);transition:gap 300ms var(--ease-out)">
+                Book a consultation
+                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="arrow-right" size="20" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
+              </span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY CHOOSE ============ -->
+  <section id="why-us" data-screen-label="Why choose Fortis Anima" style="background:var(--surface-tint);border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft)">
+    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:minmax(0,0.92fr) minmax(0,1.08fr);gap:clamp(40px,5vw,88px);align-items:start">
+
+      <div data-reveal="0" style="position:sticky;top:120px;display:flex;flex-direction:column;gap:var(--space-6)">
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start">
+          <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Why Fortis Anima</p>
+          <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Chosen for the long term</h2>
+          <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:44ch;text-wrap:pretty">What clients value is rarely the paperwork. It is how it feels to have someone in your corner — before, during and long after the launch.</p>
+        </div>
+        <div style="position:relative">
+          <div style="height:min(46vh,420px);min-height:300px;border-radius:var(--radius-image);overflow:hidden;box-shadow:var(--shadow-lift)">
+            <x-import component-from-global-scope="image-slot" from="./image-slot.js" id="why-photo" shape="rect" placeholder="Client and advisor in conversation — warm, natural daylight" hint-size="100%,100%"></x-import>
+          </div>
+          <div style="position:absolute;bottom:clamp(-18px,-2vw,-26px);left:clamp(-10px,-1.5vw,-22px);background:var(--surface-dark);border-radius:var(--radius-card);padding:var(--space-5) var(--space-6);box-shadow:var(--shadow-lift);display:flex;flex-direction:column;gap:4px;max-width:230px">
+            <span style="font-family:var(--font-display);font-size:36px;font-weight:500;line-height:1;color:var(--fa-gold-soft)">96%</span>
+            <span style="font:var(--text-caption);color:var(--text-on-dark-muted)">of clients continue working with us year after year</span>
+          </div>
+        </div>
+      </div>
+
+      <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+        <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
+          <li data-scroll-item="1" class="reason-row" style="position:relative;display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,2.6vw,40px);padding:clamp(24px,3vw,36px) clamp(12px,2vw,28px);border-top:1px solid var(--border-soft);border-radius:var(--radius-card)">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-4)">
+              <span style="font-family:var(--font-display);font-weight:500;font-size:26px;line-height:1;color:var(--fa-gold)">{{ r.num }}</span>
+              <span class="reason-icon" style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--surface-card);border:1px solid var(--border-soft);transition:background 350ms var(--ease-out), border-color 350ms var(--ease-out)">
+                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ r.icon }}" size="24" color="var(--fa-forest)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
+              </span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding-top:2px">
+              <h3 style="margin:0;font:var(--text-h4);color:var(--text-body)">{{ r.title }}</h3>
+              <p style="margin:0;font:var(--text-body-sm);color:var(--text-muted);max-width:48ch;text-wrap:pretty">{{ r.description }}</p>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section id="process" data-screen-label="Our process" style="background:var(--surface-dark);position:relative;overflow:hidden">
+    <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;top:-90px;left:-110px;width:min(420px,42vw);height:auto;opacity:0.045;pointer-events:none">
+    <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px)">
+      <div data-reveal="0" style="max-width:var(--content-width);margin:0 auto clamp(56px,6vw,88px);text-align:center;display:flex;flex-direction:column;gap:var(--space-4);align-items:center">
+        <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Our process</p>
+        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark)">A calm, precise path</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:52ch;text-wrap:pretty">Four stages, from first conversation to sustainable growth — every step considered, nothing rushed.</p>
+      </div>
+
+      <ol id="process-track" style="list-style:none;margin:0;padding:0;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,2.5vw,40px)">
+        <!-- progress rail -->
+        <div aria-hidden="true" style="position:absolute;top:33px;left:34px;right:calc(25% - 34px);height:2px;background:var(--border-on-dark)"></div>
+        <div id="process-fill" aria-hidden="true" style="position:absolute;top:33px;left:34px;right:calc(25% - 34px);transform:scaleX(0);transform-origin:left center;height:2px;background:linear-gradient(90deg,var(--fa-gold),var(--fa-gold-soft));transition:transform 1400ms var(--ease-out);box-shadow:0 0 12px rgba(176,138,79,0.5)"></div>
+
+        <sc-for list="{{ timelineSteps }}" as="step" hint-placeholder-count="4">
+          <li data-reveal="{{ step.delay }}" style="position:relative;display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+            <div style="display:flex;align-items:center;gap:var(--space-4);width:100%">
+              <span style="flex:none;position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;line-height:0;width:68px;height:68px;border-radius:50%;background:var(--surface-dark);border:1px solid var(--border-on-dark)">
+                <span style="display:inline-flex;align-items:center;justify-content:center;line-height:0;width:52px;height:52px;border-radius:50%;background:rgba(176,138,79,0.12)">
+                  <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ step.icon }}" size="24" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
+                </span>
+              </span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <span style="font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1;color:var(--fa-gold)">{{ step.num }}</span>
+              <h3 style="margin:0;font:var(--text-h4);color:var(--text-on-dark)">{{ step.title }}</h3>
+              <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:32ch;text-wrap:pretty">{{ step.description }}</p>
+            </div>
+          </li>
+        </sc-for>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT / FINAL CTA ============ -->
+  <section id="contact" data-screen-label="Contact" style="background:var(--surface-page);border-top:1px solid var(--border-soft)">
+    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,5vw,80px);align-items:center">
+      <div data-reveal="0" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+        <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Contact us</p>
+        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest);text-wrap:balance">Ready to take the next step?</h2>
+        <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:48ch;text-wrap:pretty">Get in touch today to discuss how we can support your business journey in Sweden. Let's build your future together.</p>
+        <div style="display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-3);align-self:stretch">
+          <sc-for list="{{ contactDetails }}" as="d" hint-placeholder-count="2">
+            <a href="{{ d.href }}" style="display:flex;align-items:center;gap:var(--space-4);text-decoration:none;color:var(--text-body)">
+              <span style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--surface-tint);border:1px solid var(--border-soft)">
+                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ d.icon }}" size="20" color="var(--fa-gold)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
+              </span>
+              <span style="display:flex;flex-direction:column;gap:2px">
+                <span style="font:var(--text-caption);color:var(--text-muted)">{{ d.label }}</span>
+                <span style="font:var(--text-body-sm);font-weight:500;color:var(--text-body)">{{ d.value }}</span>
+              </span>
+            </a>
+          </sc-for>
+        </div>
+      </div>
+
+      <div data-reveal="120" style="position:relative;background:var(--surface-dark);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-lift)">
+        <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);height:auto;opacity:0.06;pointer-events:none">
+        <div style="position:relative;padding:clamp(36px,4vw,56px);display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
+          <p style="margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(24px,2.4vw,30px);line-height:1.35;color:var(--fa-warm-white);text-wrap:balance">A 30-minute conversation is the best place to start.</p>
+          <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:40ch">No obligation — just a clear, honest look at your options for establishing and growing in Sweden.</p>
+          <div style="margin-top:var(--space-2)">
+            <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="lg" href="mailto:info@fortis-anima.com" on-dark="{{ true }}" hint-size="220px,54px">Book a consultation</x-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="background:var(--surface-dark);color:var(--text-on-dark)">
+  <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(40px,4.5vw,64px) clamp(20px,4vw,40px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-5) var(--space-8)">
+      <a href="#top" style="font-family:var(--font-display);font-weight:500;font-size:24px;line-height:1;color:var(--fa-warm-white);text-decoration:none;letter-spacing:0.01em;flex:none">Fortis Anima</a>
+      <nav style="display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,var(--space-7))">
+        <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="5">
+          <a href="{{ link.href }}" style="font:var(--text-body-sm);color:var(--text-on-dark-muted);text-decoration:none;transition:color var(--duration-quick) var(--ease-out)" style-hover="color:var(--fa-gold-soft)">{{ link.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="mailto:info@fortis-anima.com" style="font:var(--text-body-sm);font-weight:500;color:var(--fa-gold-soft);text-decoration:none;flex:none" style-hover="color:var(--fa-warm-white)">info@fortis-anima.com</a>
+    </div>
+    <div style="margin-top:clamp(28px,3.5vw,44px);padding-top:var(--space-5);border-top:1px solid var(--border-on-dark);display:flex;flex-wrap:wrap;gap:8px var(--space-6);align-items:center;justify-content:space-between">
+      <span style="font:var(--text-caption);color:rgba(247,244,239,0.5)">© 2026 Fortis Anima Consulting</span>
+      <a href="Impressum.dc.html" style="font:var(--text-caption);color:rgba(247,244,239,0.5);text-decoration:none" style-hover="color:var(--fa-gold-soft)">Impressum</a>
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;motion&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Behavior&quot; }
+}">
+class Component extends DCLogic {
+  state = { iconsReady: false };
+
+  componentDidMount() {
+    // Hero entrance
+    const hero = document.getElementById('top');
+    if (hero) requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('hero-in')));
+
+    // Header: transparent over hero, forest blur once scrolled
+    const header = document.getElementById('site-header');
+    this._onHeader = () => {
+      if (!header) return;
+      header.classList.toggle('scrolled', window.scrollY > 40);
+    };
+    this._onHeader();
+    window.addEventListener('scroll', this._onHeader, { passive: true });
+
+    // Icons: Lucide UMD loads async from CDN — re-render icon consumers once ready.
+    this._poll = setInterval(() => {
+      if (window.lucide && window.lucide.icons) {
+        clearInterval(this._poll);
+        this.setState({ iconsReady: true });
+      }
+    }, 120);
+
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this._motion = (this.props.motion ?? true) && !reduce;
+
+    // "Why us" reasons — build up individually as each row scrolls into view
+    const rows = document.querySelectorAll('#why-us .reason-row');
+    if (!this._motion) {
+      rows.forEach((el) => el.classList.add('in'));
+    } else {
+      this._rio = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            this._rio.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.25, rootMargin: '0px 0px -12% 0px' });
+      rows.forEach((el) => this._rio.observe(el));
+    }
+
+    if (!this._motion) return;
+
+    // Scroll reveals — progressive enhancement, applied to template wrappers only.
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.filter = 'none';
+          this._io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    const arm = () => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        if (el._revealArmed) return;
+        el._revealArmed = true;
+        const r = el.getBoundingClientRect();
+        el.style.transition = 'opacity 600ms var(--ease-out), transform 600ms var(--ease-out), filter 600ms var(--ease-out)';
+        el.style.transitionDelay = (parseInt(el.dataset.reveal, 10) || 0) + 'ms';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(22px)';
+        el.style.filter = 'blur(5px)';
+        if (r.top < window.innerHeight * 0.9) {
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.filter = 'none';
+          }));
+        } else {
+          this._io.observe(el);
+        }
+      });
+    };
+    requestAnimationFrame(arm);
+    this._armTimers = [setTimeout(arm, 800), setTimeout(arm, 2000)];
+    window.addEventListener('load', arm);
+    this._arm = arm;
+
+    // Process rail fill when the track enters view
+    this._pio = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const fill = document.getElementById('process-fill');
+          if (fill) { fill.style.transform = 'scaleX(1)'; fill.style.setProperty('--process-fill', '100%'); }
+          this._pio.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    const track = document.getElementById('process-track');
+    if (track) this._pio.observe(track);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this._poll);
+    if (this._io) this._io.disconnect();
+    (this._armTimers || []).forEach(clearTimeout);
+    if (this._arm) window.removeEventListener('load', this._arm);
+    if (this._pio) this._pio.disconnect();
+    if (this._rio) this._rio.disconnect();
+    if (this._onHeader) window.removeEventListener('scroll', this._onHeader);
+  }
+
+  renderVals() {
+    return {
+      iconsReady: this.state.iconsReady,
+
+      trustMarkers: ['Company formation', 'Leadership', 'Language training'],
+
+      reasons: [
+        { delay: 0, num: '01', icon: 'award', title: 'Expertise', description: 'We understand both international business and the Swedish market — and how to bridge the two.' },
+        { delay: 90, num: '02', icon: 'heart-handshake', title: 'Personalized support', description: 'Every client receives tailored solutions built around their specific goals, not a template.' },
+        { delay: 180, num: '03', icon: 'wrench', title: 'Practical experience', description: 'Our advice is grounded in real business experience and hands-on implementation.' },
+        { delay: 270, num: '04', icon: 'sprout', title: 'Long-term partnership', description: 'We don\u2019t just help you get started — we stay on as your business grows and takes on what comes next.' },
+      ],
+
+      cardStyle: { height: '100%', overflow: 'hidden', display: 'flex', flexDirection: 'column' },
+
+      services: [
+        { delay: 0, num: '01', icon: 'building-2', title: 'Company formation', image: 'assets/service-company-formation.png', alt: 'Advisors reviewing company registration documents with a client', description: 'From selecting the right legal structure to registration and practical advice — we simplify every step so you can focus on growing your business.' },
+        { delay: 90, num: '02', icon: 'users', title: 'Team building & leadership', image: 'assets/service-team-leadership.png', alt: 'A leader facilitating a strategy session at a flipchart', description: 'Workshops, coaching and tailored programmes that strengthen collaboration, sharpen communication and develop confident leaders.' },
+        { delay: 180, num: '03', icon: 'languages', title: 'Swedish language training', image: 'assets/service-swedish-language.png', alt: 'A Swedish language session in progress with a small group', description: 'Business Swedish for international professionals and teams — individual or group, online or on-site, paced around your work.' },
+      ],
+
+      navLinks: [
+        { label: 'About', href: '#about' },
+        { label: 'Why us', href: '#why-us' },
+        { label: 'Process', href: '#process' },
+        { label: 'Contact', href: '#contact' },
+      ],
+
+      timelineSteps: [
+        { num: '01', delay: 0, icon: 'message-circle', title: 'Initial consultation', description: 'We discuss your goals, challenges and opportunities.' },
+        { num: '02', delay: 120, icon: 'map', title: 'Strategy development', description: 'Together we create a tailored roadmap for your business.' },
+        { num: '03', delay: 240, icon: 'settings-2', title: 'Implementation', description: 'We support you throughout every stage of the process.' },
+        { num: '04', delay: 360, icon: 'sprout', title: 'Sustainable growth', description: 'Our partnership continues as your business develops.' },
+      ],
+
+      contactDetails: [
+        { icon: 'mail', label: 'Email', value: 'info@fortis-anima.com', href: 'mailto:info@fortis-anima.com' },
+      ],
+
+      footerProps: {        tagline: 'Helping businesses succeed in Sweden.',
+        columns: [
+          { title: 'Services', links: ['Company formation', 'Team building & leadership', 'Swedish language training'] },
+          { title: 'Company', links: ['About', 'Why us', 'Process', 'Contact'] },
+          { title: 'Contact', links: ['info@fortis-anima.com'] },
+        ],
+        note: '\u00A9 2026 Fortis Anima Consulting AB',
+      },
+    };
+  }
+}
+
+</script>
+</body>
+</html>

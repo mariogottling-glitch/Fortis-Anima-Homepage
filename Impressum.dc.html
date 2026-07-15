@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/tokens/base.css">
+  <link rel="stylesheet" href="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/styles.css">
+  <script src="_ds/fortis-anima-design-system-3f42250b-366f-4e04-beeb-52412f3f72ce/_ds_bundle.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--surface-page, #FAF8F5); }
+    a { color: var(--fa-forest, #1E3A34); }
+    a:hover { color: var(--fa-gold, #B08A4F); }
+  </style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:40;background:rgba(30,58,52,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border-on-dark)">
+  <nav style="display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);max-width:var(--container);margin:0 auto;padding:16px clamp(20px,4vw,40px);box-sizing:border-box">
+    <a href="Fortis Anima Website.dc.html" style="font-family:var(--font-display);font-weight:500;font-size:22px;line-height:1;color:var(--fa-warm-white);text-decoration:none">Fortis Anima</a>
+    <a href="Fortis Anima Website.dc.html" style="display:inline-flex;align-items:center;gap:8px;font:var(--text-body-sm);font-weight:500;color:var(--text-on-dark-muted);text-decoration:none" style-hover="color:var(--fa-gold-soft)">
+      <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="arrow-left" size="20" color="currentColor" hint-size="20px,20px"></x-import>
+      Back to home
+    </a>
+  </nav>
+</header>
+
+<main style="max-width:var(--content-width);margin:0 auto;box-sizing:border-box;padding:clamp(64px,8vw,120px) clamp(20px,4vw,40px) clamp(80px,9vw,140px)">
+  <p style="margin:0 0 var(--space-4);font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Legal notice</p>
+  <h1 style="margin:0 0 var(--space-3);font:var(--text-h1);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Impressum</h1>
+  <p style="margin:0 0 var(--space-8);font:var(--text-body-md);color:var(--text-muted);max-width:60ch">Information according to applicable law. This page is a placeholder — final details will be added once available.</p>
+
+  <div style="display:flex;flex-direction:column;gap:var(--space-8)">
+    <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="5">
+      <section style="display:flex;flex-direction:column;gap:var(--space-4);padding-bottom:var(--space-7);border-bottom:1px solid var(--border-soft)">
+        <h2 style="margin:0;font:var(--text-h4);color:var(--text-body)">{{ b.title }}</h2>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <sc-for list="{{ b.lines }}" as="line" hint-placeholder-count="3">
+            <p style="margin:0;font:var(--text-body-sm);color:var(--text-muted)">{{ line }}</p>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+  </div>
+
+  <p style="margin:var(--space-8) 0 0;font:var(--text-caption);color:var(--text-muted)">Last updated: placeholder — to be completed.</p>
+</main>
+
+<footer style="background:var(--surface-dark)">
+  <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(32px,4vw,48px) clamp(20px,4vw,40px);display:flex;flex-wrap:wrap;gap:var(--space-4) var(--space-6);align-items:center;justify-content:space-between">
+    <a href="Fortis Anima Website.dc.html" style="font-family:var(--font-display);font-weight:500;font-size:20px;color:var(--fa-warm-white);text-decoration:none">Fortis Anima</a>
+    <span style="font:var(--text-caption);color:rgba(247,244,239,0.5)">© 2026 Fortis Anima Consulting</span>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      blocks: [
+        { title: 'Company', lines: ['Fortis Anima Consulting', '[Legal form — placeholder]', '[Street address — placeholder]', '[Postal code, city — placeholder]', 'Sweden'] },
+        { title: 'Contact', lines: ['Email: info@fortis-anima.com', '[Phone — placeholder]'] },
+        { title: 'Represented by', lines: ['[Name of authorised representative — placeholder]'] },
+        { title: 'Registration', lines: ['[Organisation / registration number — placeholder]', '[VAT ID — placeholder]'] },
+        { title: 'Responsible for content', lines: ['[Name and address — placeholder]'] },
+        { title: 'Disclaimer', lines: ['Placeholder text. The content of this website has been prepared with care. Full legal disclaimers will be added here once finalised.'] },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>
