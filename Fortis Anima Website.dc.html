@@ -37,7 +37,7 @@
     #menu-toggle.open span:nth-child(2) { opacity: 0; }
     #menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     @media (max-width: 860px) {
-      .about-editorial { grid-template-columns: 1fr !important; }
+      .about-editorial { grid-template-columns: minmax(0,1fr) !important; }
       .about-headline-block, .about-image-wrap, .about-copy-block, .about-quote-block { grid-column: 1 / -1 !important; grid-row: auto !important; margin-top: 0 !important; }
       .about-headline-block { margin-bottom: clamp(32px,6vw,48px) !important; }
       .about-image-wrap { margin-bottom: clamp(32px,6vw,48px) !important; }
@@ -46,11 +46,11 @@
       .about-image-frame { height: min(50vh,420px) !important; border-radius: 80px 24px 24px 24px !important; }
       .about-image-badge { width: 64px !important; height: 64px !important; left: -18px !important; bottom: -18px !important; }
       .about-quote { max-width: none !important; }
-      .why-grid { grid-template-columns: 1fr !important; }
+      .why-grid { grid-template-columns: minmax(0,1fr) !important; }
       .why-panel { border-left: none !important; border-top: 1px solid var(--border-soft) !important; }
       .why-panel:first-child { border-top: none !important; }
       .why-cross { display: none !important; }
-      #process-track { grid-template-columns: 1fr !important; gap: 0 !important; }
+      #process-track { grid-template-columns: minmax(0,1fr) !important; gap: 0 !important; }
       #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
       #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
       #site-header nav { justify-content: space-between !important; }
@@ -63,12 +63,28 @@
       #process-track li { flex-direction: row !important; align-items: flex-start !important; gap: var(--space-5) !important; padding-bottom: clamp(32px,6vw,56px); }
       .hero-scroll-cue { display: none !important; }
       #top [data-hero="6"] { gap: 12px 20px !important; }
+      /* Unified mobile section rhythm — one consistent vertical padding
+         instead of each section's own desktop-tuned clamp() floor. */
+      .about-editorial, #why-us > div, #services > div, #process > div, #contact > div { padding-top: 72px !important; padding-bottom: 72px !important; }
+      .about-headline-block { margin-bottom: 40px !important; }
+      .about-quote-block { margin-top: 56px !important; }
+      #why-us > div { gap: 56px !important; }
+      .svc-card { min-height: 420px !important; }
+      #services > div > div:last-child { gap: 20px !important; }
+      #process-track li { padding-bottom: 40px !important; }
+      #process-track li:last-child { padding-bottom: 0 !important; }
+      #contact > div { gap: 48px !important; }
+      footer > div > div:first-child { gap: var(--space-4) var(--space-6) !important; }
+    }
+    @media (max-width: 480px) {
+      .hero-break { display: none; }
+      #top h1 { font-size: clamp(38px, 11vw, 52px) !important; line-height: 1.08 !important; }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
     #site-header.scrolled { background: rgba(30,58,52,0.72) !important; border-bottom-color: var(--border-on-dark) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
     /* ---- About: editorial layout ---- */
-    .about-editorial { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: clamp(20px,3vw,40px); row-gap: 0; }
+    .about-editorial { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); column-gap: clamp(20px,3vw,40px); row-gap: 0; }
     .about-rule { width: 56px; height: 1px; background: linear-gradient(90deg, var(--fa-gold), rgba(176,138,79,0)); border: none; }
     .about-headline-block { grid-column: 1 / 9; grid-row: 1; align-self: start; display: flex; flex-direction: column; gap: var(--space-5); align-items: flex-start; margin-bottom: clamp(64px,7vw,104px); }
     .about-headline { margin: 0; font: 500 clamp(42px,5.2vw,68px)/1.08 var(--font-display); letter-spacing: var(--tracking-display); color: var(--fa-forest); max-width: 15ch; text-wrap: balance; }
@@ -113,7 +129,7 @@
     }
     /* ---- Why us: premium trust grid ---- */
     .why-rule { width: 64px; height: 1px; background: linear-gradient(90deg, rgba(176,138,79,0), var(--fa-gold), rgba(176,138,79,0)); border: none; }
-    .why-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; }
+    .why-grid { position: relative; display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
     .why-panel { position: relative; overflow: hidden; padding: clamp(48px,5vw,72px) clamp(32px,4vw,56px); display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-4); border-top: 1px solid var(--border-soft); border-left: 1px solid var(--border-soft); will-change: transform; }
     .why-panel:nth-child(odd) { border-left: none; }
     .why-panel:nth-child(-n+2) { border-top: none; }
@@ -188,7 +204,7 @@
       <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start;max-width:720px;width:100%">
         <img data-hero="1" src="uploads/Fortis Anima Logo-sm.png" alt="Fortis Anima Consulting" style="width:min(150px,38%);height:auto;display:block;margin-bottom:var(--space-3)">
         <p data-hero="2" style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Consulting for Sweden</p>
-        <h1 data-hero="3" style="margin:0;font:var(--text-display);letter-spacing:var(--tracking-display);color:var(--fa-warm-white);text-wrap:balance">Your foundation<br>in Sweden.</h1>
+        <h1 data-hero="3" style="margin:0;font:var(--text-display);letter-spacing:var(--tracking-display);color:var(--fa-warm-white);text-wrap:balance">Your foundation<br class="hero-break"> in Sweden.</h1>
         <p data-hero="4" style="margin:0;font:var(--text-lead);color:rgba(247,244,239,0.82);max-width:50ch;text-wrap:pretty">We help entrepreneurs, businesses and international professionals establish, grow and thrive in Sweden — with practical expertise and personal support at every step.</p>
         <div data-hero="5" style="display:flex;gap:var(--space-4);flex-wrap:wrap;margin-top:var(--space-3)">
           <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="lg" href="#contact" on-dark="{{ true }}" hint-size="220px,54px">Book a consultation</x-import>
@@ -263,7 +279,7 @@
         </div>
         <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:36ch;text-wrap:pretty">Three practices that help you establish, lead and communicate in Sweden.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--space-6)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(290px,100%),1fr));gap:var(--space-6)">
         <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
           <a href="#contact" class="svc-card" data-reveal="{{ svc.delay }}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;border-radius:var(--radius-card);overflow:hidden;text-decoration:none">
             <img src="{{ svc.image }}" alt="{{ svc.alt }}" loading="lazy" class="svc-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
@@ -342,7 +358,7 @@
         <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:52ch;text-wrap:pretty">Four stages, from first conversation to sustainable growth — every step considered, nothing rushed.</p>
       </div>
 
-      <ol id="process-track" style="list-style:none;margin:0;padding:0;position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,2.5vw,40px)">
+      <ol id="process-track" style="list-style:none;margin:0;padding:0;position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(20px,2.5vw,40px)">
         <!-- progress rail -->
         <div aria-hidden="true" style="position:absolute;top:33px;left:34px;right:calc(25% - 34px);height:2px;background:var(--border-on-dark)"></div>
         <div id="process-fill" aria-hidden="true" style="position:absolute;top:33px;left:34px;right:calc(25% - 34px);transform:scaleX(0);transform-origin:left center;height:2px;background:linear-gradient(90deg,var(--fa-gold),var(--fa-gold-soft));transition:transform 1400ms var(--ease-out);box-shadow:0 0 12px rgba(176,138,79,0.5)"></div>
@@ -369,7 +385,7 @@
 
   <!-- ============ CONTACT / FINAL CTA ============ -->
   <section id="contact" data-screen-label="Contact" style="background:var(--surface-page);border-top:1px solid var(--border-soft)">
-    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,5vw,80px);align-items:center">
+    <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:clamp(40px,5vw,80px);align-items:center">
       <div data-reveal="0" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
         <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Contact us</p>
         <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest);text-wrap:balance">Ready to take the next step?</h2>
