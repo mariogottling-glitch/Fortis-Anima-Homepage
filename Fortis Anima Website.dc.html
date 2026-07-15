@@ -63,6 +63,11 @@
       #process-track li { flex-direction: row !important; align-items: flex-start !important; gap: var(--space-5) !important; padding-bottom: clamp(32px,6vw,56px); }
       .hero-scroll-cue { display: none !important; }
       #top [data-hero="6"] { gap: 12px 20px !important; }
+      /* The ghost button's own min-height collapses to 44px on mobile
+         while the primary button next to it stays 54px (both are
+         authored with hint-size 54px tall) — match it so the pair reads
+         as one consistent row instead of two different button heights. */
+      #top a[href="#services"] { min-height: 54px !important; padding: 16px 22px !important; }
       /* Unified mobile section rhythm — one consistent vertical padding
          instead of each section's own desktop-tuned clamp() floor. */
       .about-editorial, #why-us > div, #services > div, #process > div, #contact > div { padding-top: 72px !important; padding-bottom: 72px !important; }
@@ -115,7 +120,7 @@
     .svc-glow { position: absolute; inset: 0; opacity: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity 450ms var(--ease-out); background: radial-gradient(120% 90% at 28% -10%, rgba(200,169,106,0.22), transparent 55%); }
     .svc-icon-badge { background: rgba(20,30,27,0.55); border: 1px solid rgba(247,244,239,0.22); transition: transform 380ms cubic-bezier(0.16,1,0.3,1), border-color 380ms var(--ease-out), background 380ms var(--ease-out); }
     .svc-content { transition: transform 350ms cubic-bezier(0.16,1,0.3,1); }
-    .svc-title { color: rgba(247,244,239,0.88); transition: color 300ms var(--ease-out), transform 300ms var(--ease-out); }
+    .svc-title { color: rgba(247,244,239,0.88); text-wrap: balance; transition: color 300ms var(--ease-out), transform 300ms var(--ease-out); }
     .svc-desc { color: rgba(247,244,239,0.76); transition: color 300ms var(--ease-out); }
     .svc-link { gap: 8px; color: var(--fa-gold-soft); transition: gap 300ms var(--ease-out), color 300ms var(--ease-out); }
     .svc-link-arrow { display: inline-flex; transition: transform 300ms var(--ease-out); }
@@ -141,7 +146,7 @@
     @media (prefers-reduced-motion: no-preference) { .why-panel-sheen.why-sheen-play::after { animation: svcSheenSweep 850ms cubic-bezier(0.16,1,0.3,1); } }
     .why-panel-num { font-family: var(--font-display); font-weight: 500; font-size: 14px; letter-spacing: 0.04em; color: var(--fa-gold); }
     .why-panel-icon { display: inline-flex; margin-top: var(--space-2); }
-    .why-panel-title { margin: 0; font: 500 clamp(24px,2.2vw,30px)/1.25 var(--font-display); color: var(--fa-forest); transition: color 300ms var(--ease-out); }
+    .why-panel-title { margin: 0; font: 500 clamp(24px,2.2vw,30px)/1.25 var(--font-display); color: var(--fa-forest); text-wrap: balance; transition: color 300ms var(--ease-out); }
     .why-panel-desc { margin: 0; font: var(--text-body-sm); color: var(--text-muted); max-width: 36ch; text-wrap: pretty; }
     .why-cross { position: absolute; width: 13px; height: 13px; pointer-events: none; z-index: 2; transform: translate(-50%,-50%); }
     .why-cross::before, .why-cross::after { content: ""; position: absolute; background: rgba(176,138,79,0.38); }
@@ -173,7 +178,7 @@
   </style>
 </helmet>
 
-<header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:60;background:transparent;border-bottom:1px solid transparent;transition:background var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), backdrop-filter var(--duration-base) var(--ease-out)">
+<header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:60;background:transparent;border-bottom:1px solid transparent;transition:background var(--duration-calm) var(--ease-out), border-color var(--duration-calm) var(--ease-out), backdrop-filter var(--duration-calm) var(--ease-out)">
   <nav style="display:flex;align-items:center;justify-content:center;gap:var(--space-6);max-width:var(--container);margin:0 auto;padding:18px clamp(20px,4vw,40px);box-sizing:border-box">
     <a href="#top" id="header-brand" style="display:none;font-family:var(--font-display);font-weight:500;font-size:20px;line-height:1;color:var(--fa-warm-white);text-decoration:none">Fortis Anima</a>
     <div id="nav-links" style="display:flex;align-items:center;gap:clamp(18px,2.4vw,var(--space-6))">
@@ -251,7 +256,7 @@
           <span aria-hidden="true" class="about-image-edge"></span>
         </div>
         <span aria-hidden="true" class="about-image-badge">
-          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="sprout" size="26" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="26px,26px"></x-import>
+          <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="sprout" size="32" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="32px,32px"></x-import>
         </span>
       </div>
 
@@ -275,7 +280,7 @@
       <div data-reveal="0" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-6);margin-bottom:var(--space-8)">
         <div style="display:flex;flex-direction:column;gap:var(--space-4);max-width:640px">
           <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Our services</p>
-          <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark)">Practical support, end to end</h2>
+          <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark);text-wrap:balance">Practical support, end to end</h2>
         </div>
         <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:36ch;text-wrap:pretty">Three practices that help you establish, lead and communicate in Sweden.</p>
       </div>
@@ -314,7 +319,7 @@
       <div data-reveal="0" style="max-width:640px;margin:0 auto;text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-5)">
         <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Why Fortis Anima</p>
         <div class="why-rule" aria-hidden="true"></div>
-        <h2 style="margin:0;font:500 clamp(36px,4vw,54px)/1.12 var(--font-display);letter-spacing:var(--tracking-display);color:var(--fa-forest)">Chosen for the long term</h2>
+        <h2 style="margin:0;font:500 clamp(36px,4vw,54px)/1.12 var(--font-display);letter-spacing:var(--tracking-display);color:var(--fa-forest);text-wrap:balance">Chosen for the long term</h2>
         <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:44ch;text-wrap:pretty">What clients value is rarely the paperwork. It is how it feels to have someone in your corner — before, during and long after the launch.</p>
       </div>
 
@@ -354,7 +359,7 @@
     <div style="position:relative;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px)">
       <div data-reveal="0" style="max-width:var(--content-width);margin:0 auto clamp(56px,6vw,88px);text-align:center;display:flex;flex-direction:column;gap:var(--space-4);align-items:center">
         <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--fa-gold-soft)">Our process</p>
-        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark)">A calm, precise path</h2>
+        <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--text-on-dark);text-wrap:balance">A calm, precise path</h2>
         <p style="margin:0;font:var(--text-body-md);color:var(--text-on-dark-muted);max-width:52ch;text-wrap:pretty">Four stages, from first conversation to sustainable growth — every step considered, nothing rushed.</p>
       </div>
 
@@ -374,7 +379,7 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:12px">
               <span style="font-family:var(--font-display);font-size:22px;font-weight:500;line-height:1;color:var(--fa-gold)">{{ step.num }}</span>
-              <h3 style="margin:0;font:var(--text-h4);color:var(--text-on-dark)">{{ step.title }}</h3>
+              <h3 style="margin:0;font:var(--text-h4);color:var(--text-on-dark);text-wrap:balance">{{ step.title }}</h3>
               <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:32ch;text-wrap:pretty">{{ step.description }}</p>
             </div>
           </li>
@@ -409,7 +414,7 @@
         <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);height:auto;opacity:0.06;pointer-events:none">
         <div style="position:relative;padding:clamp(36px,4vw,56px);display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
           <p style="margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(24px,2.4vw,30px);line-height:1.35;color:var(--fa-warm-white);text-wrap:balance">A 30-minute conversation is the best place to start.</p>
-          <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:40ch">No obligation — just a clear, honest look at your options for establishing and growing in Sweden.</p>
+          <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:40ch;text-wrap:pretty">No obligation — just a clear, honest look at your options for establishing and growing in Sweden.</p>
           <div style="margin-top:var(--space-2)">
             <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="lg" href="mailto:info@fortis-anima.com" on-dark="{{ true }}" hint-size="220px,54px">Book a consultation</x-import>
           </div>
