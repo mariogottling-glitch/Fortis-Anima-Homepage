@@ -57,10 +57,36 @@
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     @keyframes heroZoom { from { transform: scale(1.08); } to { transform: scale(1); } }
     #site-header.scrolled { background: rgba(30,58,52,0.72) !important; border-bottom-color: var(--border-on-dark) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    .svc-card:hover { transform: translateY(-6px); border-color: rgba(176,138,79,0.55); box-shadow: 0 24px 48px -24px rgba(0,0,0,0.6); }
-    .svc-card:hover .svc-img { transform: scale(1.06); }
-    .svc-card:hover .svc-link { gap: 14px; }
-    .svc-card:focus-visible { outline: none; border-color: var(--fa-gold); box-shadow: 0 0 0 3px rgba(176,138,79,0.4); }
+    /* ---- Premium service-card interaction ---- */
+    .svc-card { border: 1px solid var(--border-on-dark); transition: border-color 380ms cubic-bezier(0.16,1,0.3,1), box-shadow 380ms cubic-bezier(0.16,1,0.3,1); will-change: transform; }
+    .svc-card:hover, .svc-card:focus-visible { border-color: rgba(200,169,106,0.55); box-shadow: 0 30px 60px -24px rgba(0,0,0,0.55), 0 10px 24px -12px rgba(0,0,0,0.4), 0 0 0 1px rgba(200,169,106,0.14), 0 0 36px -6px rgba(200,169,106,0.22); }
+    .svc-card:focus-visible { outline: none; }
+    @media (prefers-reduced-motion: no-preference) {
+      .svc-card { transition: transform 350ms cubic-bezier(0.16,1,0.3,1), border-color 380ms cubic-bezier(0.16,1,0.3,1), box-shadow 380ms cubic-bezier(0.16,1,0.3,1); }
+      .svc-card:focus-visible { transform: translateY(-8px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .svc-card:hover, .svc-card:focus-visible { transform: none !important; } }
+    /* Descendant hover states (icon/title/desc/link/glow/image) are driven
+       from JS (componentDidMount) rather than ".svc-card:hover .child"
+       selectors — this DC runtime's own render pass wins that cascade
+       battle. These rules just declare resting values + transitions so the
+       JS-set inline styles animate smoothly in both directions. */
+    .svc-img { transition: transform 700ms cubic-bezier(0.16,1,0.3,1); }
+    .svc-glow { position: absolute; inset: 0; opacity: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity 450ms var(--ease-out); background: radial-gradient(120% 90% at 28% -10%, rgba(200,169,106,0.22), transparent 55%); }
+    .svc-icon-badge { background: rgba(20,30,27,0.55); border: 1px solid rgba(247,244,239,0.22); transition: transform 380ms cubic-bezier(0.16,1,0.3,1), border-color 380ms var(--ease-out), background 380ms var(--ease-out); }
+    .svc-content { transition: transform 350ms cubic-bezier(0.16,1,0.3,1); }
+    .svc-title { color: rgba(247,244,239,0.88); transition: color 300ms var(--ease-out), transform 300ms var(--ease-out); }
+    .svc-desc { color: rgba(247,244,239,0.76); transition: color 300ms var(--ease-out); }
+    .svc-link { gap: 8px; color: var(--fa-gold-soft); transition: gap 300ms var(--ease-out), color 300ms var(--ease-out); }
+    .svc-link-arrow { display: inline-flex; transition: transform 300ms var(--ease-out); }
+    .svc-sheen { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .svc-sheen::after { content: ""; position: absolute; top: -30%; left: -60%; width: 35%; height: 160%; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.16) 50%, rgba(255,255,255,0) 65%, transparent 100%); transform: translateX(-20%) rotate(8deg); opacity: 0; }
+    @media (prefers-reduced-motion: no-preference) { .svc-sheen.svc-sheen-play::after { animation: svcSheenSweep 850ms cubic-bezier(0.16,1,0.3,1); } }
+    @keyframes svcSheenSweep {
+      0% { transform: translateX(-20%) rotate(8deg); opacity: 0; }
+      12% { opacity: 0.85; }
+      100% { transform: translateX(360%) rotate(8deg); opacity: 0; }
+    }
     .reason-row:last-child { border-bottom: 1px solid var(--border-soft); }
     .reason-row { opacity: 0; transform: translateY(36px); filter: blur(4px); transition: opacity 680ms var(--ease-out), transform 680ms var(--ease-out), filter 680ms var(--ease-out), background 350ms var(--ease-out), border-color 350ms var(--ease-out); }
     .reason-row.in { opacity: 1; transform: none; filter: none; }
@@ -186,21 +212,25 @@
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:var(--space-6)">
         <sc-for list="{{ services }}" as="svc" hint-placeholder-count="3">
-          <a href="#contact" class="svc-card" data-reveal="{{ svc.delay }}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;border-radius:var(--radius-card);overflow:hidden;text-decoration:none;border:1px solid var(--border-on-dark);transition:transform 450ms var(--ease-out), border-color 450ms var(--ease-out), box-shadow 450ms var(--ease-out)">
-            <img src="{{ svc.image }}" alt="{{ svc.alt }}" loading="lazy" class="svc-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform 700ms var(--ease-out)">
+          <a href="#contact" class="svc-card" data-reveal="{{ svc.delay }}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:480px;border-radius:var(--radius-card);overflow:hidden;text-decoration:none">
+            <img src="{{ svc.image }}" alt="{{ svc.alt }}" loading="lazy" class="svc-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
             <span aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,58,52,0.15) 0%,rgba(30,58,52,0.05) 30%,rgba(24,36,32,0.72) 68%,rgba(20,30,27,0.94) 100%)"></span>
-            <span style="position:absolute;top:var(--space-5);left:var(--space-5);display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;background:rgba(20,30,27,0.55);border:1px solid rgba(247,244,239,0.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">
+            <span aria-hidden="true" class="svc-glow"></span>
+            <span class="svc-icon-badge" style="position:absolute;top:var(--space-5);left:var(--space-5);display:inline-flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:50%;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)">
               <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ svc.icon }}" size="24" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="24px,24px"></x-import>
             </span>
             <span style="position:absolute;top:var(--space-5);right:var(--space-6);font-family:var(--font-display);font-weight:500;font-size:26px;line-height:1;color:rgba(247,244,239,0.5)">{{ svc.num }}</span>
-            <div style="position:relative;padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start">
-              <h3 style="margin:0;font:var(--text-h3);color:var(--fa-warm-white)">{{ svc.title }}</h3>
-              <p style="margin:0;font:var(--text-body-sm);color:rgba(247,244,239,0.76);text-wrap:pretty">{{ svc.description }}</p>
-              <span class="svc-link" style="display:inline-flex;align-items:center;gap:8px;margin-top:var(--space-2);font:var(--text-body-sm);font-weight:500;color:var(--fa-gold-soft);transition:gap 300ms var(--ease-out)">
+            <div class="svc-content" style="position:relative;padding:var(--space-6);display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start">
+              <h3 class="svc-title" style="margin:0;font:var(--text-h3)">{{ svc.title }}</h3>
+              <p class="svc-desc" style="margin:0;font:var(--text-body-sm);text-wrap:pretty">{{ svc.description }}</p>
+              <span class="svc-link" style="display:inline-flex;align-items:center;margin-top:var(--space-2);font:var(--text-body-sm);font-weight:500">
                 Book a consultation
-                <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="arrow-right" size="20" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
+                <span class="svc-link-arrow">
+                  <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="arrow-right" size="20" color="var(--fa-gold-soft)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
+                </span>
               </span>
             </div>
+            <span aria-hidden="true" class="svc-sheen"></span>
           </a>
         </sc-for>
       </div>
@@ -406,6 +436,102 @@ class Component extends DCLogic {
       rows.forEach((el) => this._rio.observe(el));
     }
 
+    // Service cards: hover feedback (icon/title/desc/link color, glow,
+    // border, shadow) plus, when motion is allowed, a cursor-tracked tilt +
+    // parallax and a one-shot sheen sweep on entry. Descendant-scoped states
+    // (".svc-card:hover .child") are set inline from here rather than via
+    // CSS: this DC runtime re-applies each element's own template style on
+    // render passes, which reliably wins the cascade over a stylesheet rule
+    // reaching into a descendant. Only self-referencing states (.svc-card
+    // itself, :focus-visible) are left to plain CSS, which isn't affected.
+    // Color/opacity feedback runs regardless of motion preference — only the
+    // tilt, parallax and sheen (actual movement) are motion-gated.
+    this._svcCleanup = [];
+    document.querySelectorAll('.svc-card').forEach((card) => {
+      const badge = card.querySelector('.svc-icon-badge');
+      const content = card.querySelector('.svc-content');
+      const img = card.querySelector('.svc-img');
+      const glow = card.querySelector('.svc-glow');
+      const title = card.querySelector('.svc-title');
+      const desc = card.querySelector('.svc-desc');
+      const link = card.querySelector('.svc-link');
+      const arrow = card.querySelector('.svc-link-arrow');
+      const sheen = card.querySelector('.svc-sheen');
+      let raf = null;
+      let px = 0.5;
+      let py = 0.5;
+
+      const apply = () => {
+        raf = null;
+        // Positive rotateX tilts the bottom edge toward the viewer, positive
+        // rotateY tilts the left edge away — invert both so the corner
+        // nearest the cursor is the one that lifts toward the viewer.
+        const rx = (py - 0.5) * 6;
+        const ry = (0.5 - px) * 6;
+        card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-8px) scale(1.012)`;
+        if (content) content.style.transform = `translate3d(${((px - 0.5) * -6).toFixed(1)}px, ${((py - 0.5) * -6).toFixed(1)}px, 0)`;
+        if (badge) badge.style.transform = `translate3d(${((px - 0.5) * -4).toFixed(1)}px, ${((py - 0.5) * -4).toFixed(1)}px, 0) scale(1.08)`;
+      };
+      const onMove = (e) => {
+        if (!this._motion) return;
+        const r = card.getBoundingClientRect();
+        px = (e.clientX - r.left) / r.width;
+        py = (e.clientY - r.top) / r.height;
+        if (raf == null) raf = requestAnimationFrame(apply);
+      };
+      const setHoverStyles = () => {
+        if (img) img.style.transform = 'scale(1.06)';
+        if (glow) glow.style.opacity = '1';
+        if (badge) { badge.style.borderColor = 'rgba(200,169,106,0.5)'; badge.style.background = 'rgba(200,169,106,0.16)'; }
+        if (title) { title.style.color = 'var(--fa-warm-white)'; if (this._motion) title.style.transform = 'translateY(-2px)'; }
+        if (desc) desc.style.color = 'rgba(247,244,239,0.92)';
+        if (link) { link.style.gap = '14px'; link.style.color = '#C8A96A'; }
+        if (arrow && this._motion) arrow.style.transform = 'translateX(3px)';
+      };
+      const clearHoverStyles = () => {
+        if (img) img.style.transform = '';
+        if (glow) glow.style.opacity = '';
+        if (badge) { badge.style.borderColor = ''; badge.style.background = ''; }
+        if (title) { title.style.color = ''; title.style.transform = ''; }
+        if (desc) desc.style.color = '';
+        if (link) { link.style.gap = ''; link.style.color = ''; }
+        if (arrow) arrow.style.transform = '';
+      };
+      const onEnter = (e) => {
+        setHoverStyles();
+        if (!this._motion) return;
+        const r = card.getBoundingClientRect();
+        px = (e.clientX - r.left) / r.width;
+        py = (e.clientY - r.top) / r.height;
+        apply();
+        if (sheen) {
+          sheen.classList.remove('svc-sheen-play');
+          void sheen.offsetWidth;
+          sheen.classList.add('svc-sheen-play');
+        }
+      };
+      const onLeave = () => {
+        clearHoverStyles();
+        if (raf != null) { cancelAnimationFrame(raf); raf = null; }
+        card.style.transform = '';
+        if (content) content.style.transform = '';
+        if (badge) badge.style.transform = '';
+      };
+      const onSheenEnd = () => { if (sheen) sheen.classList.remove('svc-sheen-play'); };
+
+      card.addEventListener('pointermove', onMove);
+      card.addEventListener('pointerenter', onEnter);
+      card.addEventListener('pointerleave', onLeave);
+      if (sheen) sheen.addEventListener('animationend', onSheenEnd);
+      this._svcCleanup.push(() => {
+        card.removeEventListener('pointermove', onMove);
+        card.removeEventListener('pointerenter', onEnter);
+        card.removeEventListener('pointerleave', onLeave);
+        if (sheen) sheen.removeEventListener('animationend', onSheenEnd);
+        if (raf != null) cancelAnimationFrame(raf);
+      });
+    });
+
     if (!this._motion) return;
 
     // Scroll reveals — progressive enhancement, applied to template wrappers only.
@@ -474,6 +600,7 @@ class Component extends DCLogic {
     if (menuToggle && this._onMenuToggle) menuToggle.removeEventListener('click', this._onMenuToggle);
     if (navLinksEl && this._closeNav) navLinksEl.querySelectorAll('a').forEach((a) => a.removeEventListener('click', this._closeNav));
     document.body.classList.remove('nav-open');
+    (this._svcCleanup || []).forEach((fn) => fn());
   }
 
   renderVals() {
