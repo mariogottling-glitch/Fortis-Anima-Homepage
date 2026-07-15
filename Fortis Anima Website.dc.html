@@ -31,6 +31,11 @@
     body { margin: 0; background: var(--surface-page, #FAF8F5); }
     a { color: var(--fa-forest, #1E3A34); }
     a:hover { color: var(--fa-gold, #B08A4F); }
+    body.nav-open { overflow: hidden; }
+    #menu-toggle { display: none; }
+    #menu-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #menu-toggle.open span:nth-child(2) { opacity: 0; }
+    #menu-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     @media (max-width: 860px) {
       #about > div { grid-template-columns: 1fr !important; }
       #why-us > div { grid-template-columns: 1fr !important; }
@@ -38,6 +43,12 @@
       #process-track { grid-template-columns: 1fr !important; gap: 0 !important; }
       #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
       #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
+      #site-header nav { justify-content: space-between !important; }
+      #header-brand { display: inline-flex !important; }
+      #menu-toggle { display: inline-flex !important; }
+      #nav-links { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; flex-direction: column !important; align-items: flex-start !important; justify-content: center !important; gap: var(--space-6) !important; background: rgba(20,30,27,0.98); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: clamp(80px,12vh,120px) clamp(28px,8vw,48px) clamp(40px,8vh,60px); box-sizing: border-box; transform: translateX(100%); opacity: 0; visibility: hidden; transition: transform 380ms var(--ease-out), opacity 380ms var(--ease-out), visibility 0s 380ms; }
+      #nav-links.open { transform: translateX(0); opacity: 1; visibility: visible; transition: transform 380ms var(--ease-out), opacity 380ms var(--ease-out), visibility 0s; }
+      #nav-links a { font-size: 22px !important; }
       #process-track li { flex-direction: row !important; align-items: flex-start !important; gap: var(--space-5) !important; padding-bottom: clamp(32px,6vw,56px); }
     }
     @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
@@ -80,12 +91,18 @@
 
 <header id="site-header" style="position:fixed;top:0;left:0;right:0;z-index:60;background:transparent;border-bottom:1px solid transparent;transition:background var(--duration-base) var(--ease-out), border-color var(--duration-base) var(--ease-out), backdrop-filter var(--duration-base) var(--ease-out)">
   <nav style="display:flex;align-items:center;justify-content:center;gap:var(--space-6);max-width:var(--container);margin:0 auto;padding:18px clamp(20px,4vw,40px);box-sizing:border-box">
-    <div style="display:flex;align-items:center;gap:clamp(18px,2.4vw,var(--space-6))">
+    <a href="#top" id="header-brand" style="display:none;font-family:var(--font-display);font-weight:500;font-size:20px;line-height:1;color:var(--fa-warm-white);text-decoration:none">Fortis Anima</a>
+    <div id="nav-links" style="display:flex;align-items:center;gap:clamp(18px,2.4vw,var(--space-6))">
       <sc-for list="{{ navLinks }}" as="link" hint-placeholder-count="4">
         <a href="{{ link.href }}" style="font:var(--text-body-sm);font-weight:500;color:rgba(247,244,239,0.82);text-decoration:none;transition:color var(--duration-quick) var(--ease-out)" style-hover="color:var(--fa-gold-soft)">{{ link.label }}</a>
       </sc-for>
       <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="md" href="#contact" on-dark="{{ true }}" hint-size="180px,44px">Book a consultation</x-import>
     </div>
+    <button id="menu-toggle" type="button" aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-links" style="display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;flex:none;background:rgba(20,30,27,0.4);border:1px solid rgba(247,244,239,0.25);border-radius:10px;cursor:pointer">
+      <span aria-hidden="true" style="display:block;width:18px;height:2px;background:var(--fa-warm-white);transition:transform 250ms var(--ease-out), opacity 250ms var(--ease-out)"></span>
+      <span aria-hidden="true" style="display:block;width:18px;height:2px;background:var(--fa-warm-white);transition:transform 250ms var(--ease-out), opacity 250ms var(--ease-out)"></span>
+      <span aria-hidden="true" style="display:block;width:18px;height:2px;background:var(--fa-warm-white);transition:transform 250ms var(--ease-out), opacity 250ms var(--ease-out)"></span>
+    </button>
   </nav>
 </header>
 
@@ -339,6 +356,26 @@ class Component extends DCLogic {
     this._onHeader();
     window.addEventListener('scroll', this._onHeader, { passive: true });
 
+    // Mobile nav: hamburger toggle for the full-screen link overlay
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinksEl = document.getElementById('nav-links');
+    if (menuToggle && navLinksEl) {
+      this._closeNav = () => {
+        navLinksEl.classList.remove('open');
+        menuToggle.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+      };
+      this._onMenuToggle = () => {
+        const open = navLinksEl.classList.toggle('open');
+        menuToggle.classList.toggle('open', open);
+        menuToggle.setAttribute('aria-expanded', String(open));
+        document.body.classList.toggle('nav-open', open);
+      };
+      menuToggle.addEventListener('click', this._onMenuToggle);
+      navLinksEl.querySelectorAll('a').forEach((a) => a.addEventListener('click', this._closeNav));
+    }
+
     // Icons: Lucide UMD loads async from CDN — re-render icon consumers once ready.
     this._poll = setInterval(() => {
       if (window.lucide && window.lucide.icons) {
@@ -429,6 +466,11 @@ class Component extends DCLogic {
     if (this._pio) this._pio.disconnect();
     if (this._rio) this._rio.disconnect();
     if (this._onHeader) window.removeEventListener('scroll', this._onHeader);
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinksEl = document.getElementById('nav-links');
+    if (menuToggle && this._onMenuToggle) menuToggle.removeEventListener('click', this._onMenuToggle);
+    if (navLinksEl && this._closeNav) navLinksEl.querySelectorAll('a').forEach((a) => a.removeEventListener('click', this._closeNav));
+    document.body.classList.remove('nav-open');
   }
 
   renderVals() {
