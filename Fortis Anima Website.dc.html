@@ -164,6 +164,22 @@
     .why-cross::before { top: 50%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); }
     .why-cross::after { left: 50%; top: 0; height: 100%; width: 1px; transform: translateX(-50%); }
     .why-stat-number { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(64px,9vw,120px); line-height: 1; color: var(--fa-forest); letter-spacing: var(--tracking-display); }
+    /* ---- Contact: premium CTA card ----
+       Border-color/box-shadow/transform on .contact-card itself are plain
+       CSS :hover — self-referencing state is reliable here. The glow,
+       sheen and icon-circle states are descendant-scoped, which this DC
+       runtime's own re-render doesn't reliably preserve (same finding as
+       the service cards and why-us panels), so those are set from JS. */
+    .contact-card { position: relative; overflow: hidden; background: var(--surface-dark); border: 1px solid var(--border-on-dark); box-shadow: 0 40px 80px -32px rgba(30,58,52,0.35), 0 16px 32px -16px rgba(30,58,52,0.2); will-change: transform; }
+    .contact-card { transition: border-color 380ms cubic-bezier(0.16,1,0.3,1), box-shadow 380ms cubic-bezier(0.16,1,0.3,1); }
+    .contact-card:hover { border-color: rgba(200,169,106,0.45); box-shadow: 0 48px 96px -32px rgba(30,58,52,0.45), 0 20px 44px -16px rgba(30,58,52,0.28), 0 0 44px -10px rgba(200,169,106,0.28); }
+    @media (prefers-reduced-motion: no-preference) { .contact-card { transition: transform 380ms cubic-bezier(0.16,1,0.3,1), border-color 380ms cubic-bezier(0.16,1,0.3,1), box-shadow 380ms cubic-bezier(0.16,1,0.3,1); } .contact-card:hover { transform: translateY(-6px); } }
+    .contact-card-glow { position: absolute; inset: 0; opacity: 0.55; pointer-events: none; mix-blend-mode: screen; transition: opacity 450ms var(--ease-out); background: radial-gradient(140% 100% at var(--mx,85%) var(--my,100%), rgba(200,169,106,0.26), transparent 62%); }
+    .contact-card-edge { position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(247,244,239,0.1); pointer-events: none; }
+    .contact-card-sheen { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .contact-card-sheen::after { content: ""; position: absolute; top: -30%; left: -60%; width: 35%; height: 160%; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 65%, transparent 100%); transform: translateX(-20%) rotate(8deg); opacity: 0; }
+    @media (prefers-reduced-motion: no-preference) { .contact-card-sheen.contact-sheen-play::after { animation: svcSheenSweep 850ms cubic-bezier(0.16,1,0.3,1); } }
+    .contact-icon { border-radius: 50%; transition: border-color 350ms var(--ease-out), background 350ms var(--ease-out); }
     @media (max-width: 1180px) { #top [data-hero-side] { display: none !important; } }
     @keyframes heroScroll { 0% { opacity:0; transform:translateY(-2px); } 30% { opacity:1; } 100% { opacity:0; transform:translateY(12px); } }
     @keyframes nodeGlow {
@@ -403,12 +419,13 @@
     <div style="max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(88px,9vw,140px) clamp(20px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:clamp(40px,5vw,80px);align-items:center">
       <div data-reveal="0" style="display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
         <p style="margin:0;font:var(--text-overline);letter-spacing:var(--tracking-overline);text-transform:uppercase;color:var(--text-accent)">Contact us</p>
+        <div class="about-rule" aria-hidden="true"></div>
         <h2 style="margin:0;font:var(--text-h2);letter-spacing:var(--tracking-display);color:var(--fa-forest);text-wrap:balance">Ready to take the next step?</h2>
         <p style="margin:0;font:var(--text-body-md);color:var(--text-muted);max-width:48ch;text-wrap:pretty">Get in touch to discuss your business journey in Sweden.</p>
         <div style="display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-3);align-self:stretch">
           <sc-for list="{{ contactDetails }}" as="d" hint-placeholder-count="2">
             <a href="{{ d.href }}" style="display:flex;align-items:center;gap:var(--space-4);text-decoration:none;color:var(--text-body)">
-              <span style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--surface-tint);border:1px solid var(--border-soft)">
+              <span class="contact-icon" style="flex:none;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:var(--surface-tint);border:1px solid var(--border-soft)">
                 <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Icon" name="{{ d.icon }}" size="20" color="var(--fa-gold)" data-icons-ready="{{ iconsReady }}" hint-size="20px,20px"></x-import>
               </span>
               <span style="display:flex;flex-direction:column;gap:2px">
@@ -420,8 +437,11 @@
         </div>
       </div>
 
-      <div data-reveal="120" style="position:relative;background:var(--surface-dark);border-radius:var(--radius-card);overflow:hidden;box-shadow:var(--shadow-lift)">
-        <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);height:auto;opacity:0.06;pointer-events:none">
+      <div data-reveal="120" class="contact-card" style="border-radius:var(--radius-card)">
+        <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);height:auto;opacity:0.08;pointer-events:none">
+        <span aria-hidden="true" class="contact-card-glow"></span>
+        <span aria-hidden="true" class="contact-card-sheen"></span>
+        <span aria-hidden="true" class="contact-card-edge"></span>
         <div style="position:relative;padding:clamp(36px,4vw,56px);display:flex;flex-direction:column;gap:var(--space-5);align-items:flex-start">
           <p style="margin:0;font-family:var(--font-display);font-weight:500;font-size:clamp(24px,2.4vw,30px);line-height:1.35;color:var(--fa-warm-white);text-wrap:balance">A 30-minute conversation is the best place to start.</p>
           <p style="margin:0;font:var(--text-body-sm);color:var(--text-on-dark-muted);max-width:40ch;text-wrap:pretty">No obligation — just a clear, honest look at your options in Sweden.</p>
@@ -673,6 +693,69 @@ class Component extends DCLogic {
       });
     });
 
+    // Contact CTA card: cursor-tracked glow + one-shot sheen on entry, same
+    // JS-driven-descendant-state reasoning as the service cards and why-us
+    // panels above. The card's own border/shadow/lift stay plain CSS
+    // :hover (self-referencing, reliable here).
+    this._contactCleanup = [];
+    const contactCard = document.querySelector('.contact-card');
+    if (contactCard) {
+      const glow = contactCard.querySelector('.contact-card-glow');
+      const sheen = contactCard.querySelector('.contact-card-sheen');
+      let raf = null;
+      const setPos = (e) => {
+        const r = contactCard.getBoundingClientRect();
+        const x = ((e.clientX - r.left) / r.width) * 100;
+        const y = ((e.clientY - r.top) / r.height) * 100;
+        contactCard.style.setProperty('--mx', x.toFixed(1) + '%');
+        contactCard.style.setProperty('--my', y.toFixed(1) + '%');
+      };
+      const onMove = (e) => {
+        if (!this._motion || raf != null) return;
+        raf = requestAnimationFrame(() => { raf = null; setPos(e); });
+      };
+      const onEnter = (e) => {
+        if (glow) glow.style.opacity = '1';
+        if (!this._motion) return;
+        setPos(e);
+        if (sheen) {
+          sheen.classList.remove('contact-sheen-play');
+          void sheen.offsetWidth;
+          sheen.classList.add('contact-sheen-play');
+        }
+      };
+      const onLeave = () => {
+        if (raf != null) { cancelAnimationFrame(raf); raf = null; }
+        if (glow) glow.style.opacity = '';
+      };
+      const onSheenEnd = () => { if (sheen) sheen.classList.remove('contact-sheen-play'); };
+      contactCard.addEventListener('pointermove', onMove);
+      contactCard.addEventListener('pointerenter', onEnter);
+      contactCard.addEventListener('pointerleave', onLeave);
+      if (sheen) sheen.addEventListener('animationend', onSheenEnd);
+      this._contactCleanup.push(() => {
+        contactCard.removeEventListener('pointermove', onMove);
+        contactCard.removeEventListener('pointerenter', onEnter);
+        contactCard.removeEventListener('pointerleave', onLeave);
+        if (sheen) sheen.removeEventListener('animationend', onSheenEnd);
+        if (raf != null) cancelAnimationFrame(raf);
+      });
+    }
+    // Contact email row: the icon circle is a descendant of the <a>, same
+    // reason as above for driving its hover state from JS.
+    document.querySelectorAll('#contact a[href]').forEach((link) => {
+      const icon = link.querySelector('.contact-icon');
+      if (!icon) return;
+      const onEnter = () => { icon.style.borderColor = 'rgba(200,169,106,0.5)'; icon.style.background = 'rgba(176,138,79,0.14)'; };
+      const onLeave = () => { icon.style.borderColor = ''; icon.style.background = ''; };
+      link.addEventListener('pointerenter', onEnter);
+      link.addEventListener('pointerleave', onLeave);
+      this._contactCleanup.push(() => {
+        link.removeEventListener('pointerenter', onEnter);
+        link.removeEventListener('pointerleave', onLeave);
+      });
+    });
+
     if (!this._motion) return;
 
     // Scroll reveals — progressive enhancement, applied to template wrappers only.
@@ -742,6 +825,7 @@ class Component extends DCLogic {
     document.body.classList.remove('nav-open');
     (this._whyCleanup || []).forEach((fn) => fn());
     (this._svcCleanup || []).forEach((fn) => fn());
+    (this._contactCleanup || []).forEach((fn) => fn());
   }
 
   renderVals() {
