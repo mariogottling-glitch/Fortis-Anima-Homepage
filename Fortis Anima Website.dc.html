@@ -51,8 +51,19 @@
       .why-panel:first-child { border-top: none !important; }
       .why-cross { display: none !important; }
       #process-track { grid-template-columns: minmax(0,1fr) !important; gap: 0 !important; }
-      #process-track > div[aria-hidden] { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; }
-      #process-fill { top: 0 !important; bottom: 0 !important; left: 33px !important; right: auto !important; width: 2px !important; height: auto !important; transform: none !important; }
+      /* The desktop rail is one continuous line across a single row of
+         equal-height icons, positioned with top:0/bottom:0 relative to the
+         track. On mobile the items stack with variable-height text next to
+         a fixed-size icon, so that same line stretches to the bottom of the
+         tallest (last) text block instead of stopping at the last icon.
+         Hide it and draw a short connector per item instead: each one runs
+         from its own icon's bottom to the next item's icon top (68px icon
+         height, then however tall this item's text turns out to be, then
+         the 40px gap before the next item) — self-adjusting to content
+         height, and simply absent after the last item. */
+      #process-track > div[aria-hidden] { display: none !important; }
+      #process-track li:not(:last-child)::after { content: ""; position: absolute; top: 68px; bottom: -40px; left: 33px; width: 2px; background: linear-gradient(180deg,var(--fa-gold),var(--fa-gold-soft)); box-shadow: 0 0 12px rgba(176,138,79,0.5); }
+      #process-track li > div:first-child { width: auto !important; }
       #site-header nav { justify-content: space-between !important; }
       #header-brand { display: inline-flex !important; opacity: 0; pointer-events: none; transition: opacity 250ms var(--ease-out); }
       #site-header.scrolled #header-brand { opacity: 1; pointer-events: auto; }
