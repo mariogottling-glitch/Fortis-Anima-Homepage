@@ -3,17 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fortis Anima — Business Consulting &amp; Company Formation in Sweden</title>
-<meta name="description" content="Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.">
+<title id="doc-title">Fortis Anima — Business Consulting &amp; Company Formation in Sweden</title>
+<meta id="meta-description" name="description" content="Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.">
 <meta name="theme-color" content="#1E3A34">
 <link rel="icon" type="image/png" href="uploads/favicon-32.png">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
-<meta property="og:description" content="We help entrepreneurs and international businesses establish and grow in Sweden — with expertise you can trust.">
+<meta id="og-title" property="og:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
+<meta id="og-description" property="og:description" content="We help entrepreneurs and international businesses establish and grow in Sweden — with expertise you can trust.">
 <meta property="og:image" content="uploads/Fortis Anima Logo-934af31b.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
-<meta name="twitter:description" content="We help entrepreneurs and international businesses establish and grow in Sweden.">
+<meta id="twitter-title" name="twitter:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
+<meta id="twitter-description" name="twitter:description" content="We help entrepreneurs and international businesses establish and grow in Sweden.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Fortis Anima Consulting",
+  "description": "Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.",
+  "email": "info@fortis-anima.com",
+  "areaServed": { "@type": "Country", "name": "Sweden" },
+  "availableLanguage": ["English", "Swedish"]
+}
+</script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -489,6 +500,8 @@
 const TRANSLATIONS = {
   en: {
     pageTitle: 'Fortis Anima — Business Consulting & Company Formation in Sweden',
+    metaDescription: 'Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.',
+    ogDescription: 'We help entrepreneurs and international businesses establish and grow in Sweden — with expertise you can trust.',
     langSwitchLabel: 'Language',
     navToggleLabel: 'Toggle menu',
     navLinks: [
@@ -562,6 +575,8 @@ const TRANSLATIONS = {
 
   sv: {
     pageTitle: 'Fortis Anima — Affärsrådgivning & företagsbildning i Sverige',
+    metaDescription: 'Affärsrådgivning för Sverige: företagsbildning, ledarskapsutveckling och svensk språkutbildning för entreprenörer och internationella team.',
+    ogDescription: 'Vi hjälper entreprenörer och internationella företag att etablera och växa i Sverige — med expertis du kan lita på.',
     langSwitchLabel: 'Språk',
     navToggleLabel: 'Växla meny',
     navLinks: [
@@ -647,6 +662,21 @@ class Component extends DCLogic {
     return !!img;
   }
 
+  _syncMeta(lang) {
+    const t = TRANSLATIONS[lang];
+    document.documentElement.lang = lang;
+    document.title = t.pageTitle;
+    const setContent = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.setAttribute('content', value);
+    };
+    setContent('meta-description', t.metaDescription);
+    setContent('og-title', t.pageTitle);
+    setContent('og-description', t.ogDescription);
+    setContent('twitter-title', t.pageTitle);
+    setContent('twitter-description', t.ogDescription);
+  }
+
   _syncLangUI(lang) {
     document.querySelectorAll('.lang-btn').forEach((btn) => {
       const active = btn.dataset.lang === lang;
@@ -658,8 +688,7 @@ class Component extends DCLogic {
   setLang(lang) {
     if (!TRANSLATIONS[lang] || lang === this.state.lang) return;
     localStorage.setItem('fa-lang', lang);
-    document.documentElement.lang = lang;
-    document.title = TRANSLATIONS[lang].pageTitle;
+    this._syncMeta(lang);
     this.setState({ lang });
     this._syncLangUI(lang);
     this._setAboutPhotoAlt(lang);
@@ -667,11 +696,10 @@ class Component extends DCLogic {
 
   componentDidMount() {
     // Language: reflect the persisted/default choice on the document itself
-    // (the <html lang> attribute and <title> live outside the reactive
-    // <x-dc> template, so they're kept in sync imperatively here and again
-    // in setLang() on every switch).
-    document.documentElement.lang = this.state.lang;
-    document.title = TRANSLATIONS[this.state.lang].pageTitle;
+    // (the <html lang> attribute, <title> and meta tags live outside the
+    // reactive <x-dc> template, so they're kept in sync imperatively here
+    // and again in setLang() on every switch).
+    this._syncMeta(this.state.lang);
     this._syncLangUI(this.state.lang);
     this._langCleanup = [];
     document.querySelectorAll('.lang-btn').forEach((btn) => {
