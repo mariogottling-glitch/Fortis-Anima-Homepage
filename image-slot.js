@@ -291,7 +291,13 @@
     // same left/top/width/height in frame-%, computed by _applyView(), so the
     // inside-mask crop and the outside-mask spill stay pixel-aligned.
     '.frame img{position:absolute;max-width:none;transform:translate(-50%,-50%);' +
-    '  -webkit-user-drag:none;user-select:none;touch-action:none}' +
+    '  -webkit-user-drag:none;user-select:none}' +
+    // touch-action:none disables the browser's native touch-scroll handling
+    // on whatever it's applied to — appropriate while this element is the
+    // drag/pan surface for reframing inside the design tool, but on a
+    // published page (no data-editable) it did nothing but eat every scroll
+    // gesture that started on the photo. Scoped to editable mode only.
+    ':host([data-editable]) .frame img{touch-action:none}' +
     // Reframe mode (double-click): the full image spills past the mask. The
     // spill layer is sized to the IMAGE bounds so its corners are where the
     // resize handles belong. The ghost <img> inside is translucent; the real
@@ -301,7 +307,8 @@
     // ancestor (a plain z-index can't escape overflow clipping). UA popover
     // defaults (inset:0;margin:auto) are reset; _applyView sets viewport px.
     '.spill{position:fixed;margin:0;inset:auto;border:0;padding:0;background:transparent;' +
-    '  overflow:visible;transform:translate(-50%,-50%);z-index:1;cursor:grab;touch-action:none}' +
+    '  overflow:visible;transform:translate(-50%,-50%);z-index:1;cursor:grab}' +
+    ':host([data-editable]) .spill{touch-action:none}' +
     ':host([data-panning]) .spill{cursor:grabbing}' +
     '.spill .ghost{position:absolute;inset:0;width:100%;height:100%;opacity:.35;' +
     '  pointer-events:none;-webkit-user-drag:none;user-select:none;' +
