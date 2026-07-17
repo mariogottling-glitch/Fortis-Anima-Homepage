@@ -32,4 +32,20 @@
     <xhtml:link rel="alternate" hreflang="sv" href="https://www.fortis-anima.com/kontakt"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.fortis-anima.com/contact"/>
   </url>
+  <url>
+    <loc>https://www.fortis-anima.com/privacy</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.fortis-anima.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.fortis-anima.com/integritet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.fortis-anima.com/privacy"/>
+  </url>
+  <url>
+    <loc>https://www.fortis-anima.com/integritet</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.fortis-anima.com/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://www.fortis-anima.com/integritet"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.fortis-anima.com/privacy"/>
+  </url>
 </urlset>

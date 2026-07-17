@@ -567,7 +567,10 @@
     </div>
     <div style="margin-top:clamp(28px,3.5vw,44px);padding-top:var(--space-5);border-top:1px solid var(--border-on-dark);display:flex;flex-wrap:wrap;gap:8px var(--space-6);align-items:center;justify-content:space-between">
       <span style="font:var(--text-caption);color:rgba(247,244,239,0.5)">{{ footerCopyright }}</span>
-      <a href="/contact" style="font:var(--text-caption);color:rgba(247,244,239,0.5);text-decoration:none" style-hover="color:var(--fa-gold-soft)">{{ footerLegalLabel }}</a>
+      <div style="display:flex;gap:var(--space-5);align-items:center">
+        <a href="/contact" style="font:var(--text-caption);color:rgba(247,244,239,0.5);text-decoration:none" style-hover="color:var(--fa-gold-soft)">{{ footerLegalLabel }}</a>
+        <a href="/privacy" style="font:var(--text-caption);color:rgba(247,244,239,0.5);text-decoration:none" style-hover="color:var(--fa-gold-soft)">{{ footerPrivacyLabel }}</a>
+      </div>
     </div>
   </div>
 </footer>
@@ -649,6 +652,7 @@ const TRANSLATIONS = {
     contactCtaAriaLabel: 'Email us to book a consultation',
 
     footerLegalLabel: 'Company details',
+    footerPrivacyLabel: 'Privacy',
     footerCopyright: '© 2026 Fortis Anima Consulting',
   },
 
@@ -724,6 +728,7 @@ const TRANSLATIONS = {
     contactCtaAriaLabel: 'Maila oss för att boka en konsultation',
 
     footerLegalLabel: 'Företagsuppgifter',
+    footerPrivacyLabel: 'Integritet',
     footerCopyright: '© 2026 Fortis Anima Consulting',
   },
 };
