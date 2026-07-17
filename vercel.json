@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/Fortis Anima Website.dc.html" },
-    { "source": "/sv", "destination": "/sv.html" }
+    { "source": "/sv", "destination": "/sv.html" },
+    { "source": "/contact", "destination": "/Contact.dc.html" },
+    { "source": "/kontakt", "destination": "/kontakt.html" }
   ]
 }
