@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/Fortis Anima Website.dc.html" }
+  ]
+}
