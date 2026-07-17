@@ -1,36 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fortis Anima — Business Consulting &amp; Company Formation in Sweden</title>
-<meta name="description" content="Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.">
+<title>Fortis Anima — Affärsrådgivning &amp; företagsbildning i Sverige</title>
+<meta name="description" content="Affärsrådgivning för Sverige: företagsbildning, ledarskapsutveckling och svensk språkutbildning för entreprenörer och internationella team.">
 <meta name="theme-color" content="#1E3A34">
-<link rel="canonical" href="https://www.fortis-anima.com/">
+<link rel="canonical" href="https://www.fortis-anima.com/sv">
 <link rel="alternate" hreflang="en" href="https://www.fortis-anima.com/">
 <link rel="alternate" hreflang="sv" href="https://www.fortis-anima.com/sv">
 <link rel="alternate" hreflang="x-default" href="https://www.fortis-anima.com/">
 <link rel="icon" type="image/png" href="uploads/favicon-32.png">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.fortis-anima.com/">
-<meta property="og:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
-<meta property="og:description" content="We help entrepreneurs and international businesses establish and grow in Sweden — with expertise you can trust.">
+<meta property="og:url" content="https://www.fortis-anima.com/sv">
+<meta property="og:title" content="Fortis Anima — Affärsrådgivning &amp; företagsbildning i Sverige">
+<meta property="og:description" content="Vi hjälper entreprenörer och internationella företag att etablera och växa i Sverige — med expertis du kan lita på.">
 <meta property="og:image" content="https://www.fortis-anima.com/uploads/Fortis%20Anima%20Logo-934af31b.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Fortis Anima Consulting — Your Foundation in Sweden">
-<meta name="twitter:description" content="We help entrepreneurs and international businesses establish and grow in Sweden.">
+<meta name="twitter:title" content="Fortis Anima — Affärsrådgivning &amp; företagsbildning i Sverige">
+<meta name="twitter:description" content="Vi hjälper entreprenörer och internationella företag att etablera och växa i Sverige.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Fortis Anima Consulting",
-  "description": "Business consulting for Sweden: company formation, leadership development and Swedish language training for entrepreneurs and international teams.",
-  "url": "https://www.fortis-anima.com/",
+  "description": "Affärsrådgivning för Sverige: företagsbildning, ledarskapsutveckling och svensk språkutbildning för entreprenörer och internationella team.",
+  "url": "https://www.fortis-anima.com/sv",
   "logo": "https://www.fortis-anima.com/uploads/Fortis%20Anima%20Logo-934af31b.png",
   "email": "info@fortis-anima.com",
   "areaServed": { "@type": "Country", "name": "Sweden" },
   "availableLanguage": ["English", "Swedish"],
-  "inLanguage": "en"
+  "inLanguage": "sv"
 }
 </script>
 <script src="./support.js"></script>
@@ -238,8 +238,8 @@
       </sc-for>
       <x-import component-from-global-scope="FortisAnimaDesignSystem_3f4225.Button" variant="primary" size="md" href="#contact" on-dark="{{ true }}" hint-size="180px,44px">{{ ctaLabel }}</x-import>
       <div id="lang-switch" role="group" aria-label="{{ langSwitchLabel }}" style="display:flex;align-items:center;gap:2px;padding:4px;border:1px solid rgba(247,244,239,0.22);border-radius:999px">
-        <a class="lang-btn lang-btn-active" href="/" aria-current="page">EN</a>
-        <a class="lang-btn" href="/sv">SV</a>
+        <a class="lang-btn" href="/">EN</a>
+        <a class="lang-btn lang-btn-active" href="/sv" aria-current="page">SV</a>
       </div>
     </div>
     <button id="menu-toggle" type="button" aria-label="{{ navToggleLabel }}" aria-expanded="false" aria-controls="nav-links" style="display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;padding:0;flex:none;background:rgba(20,30,27,0.4);border:1px solid rgba(247,244,239,0.25);border-radius:10px;cursor:pointer">
@@ -658,20 +658,21 @@ const TRANSLATIONS = {
 };
 
 class Component extends DCLogic {
-  // Language is fixed per static file (this one is English) rather than
-  // runtime-switchable: Swedish lives at a separate real URL, "/sv" — see
-  // sv.html. This DC runtime re-fetches the *current* document's own raw
-  // source to build the template (see boot() in support.js), so a single
-  // shared file can't serve genuinely different raw HTML per language;
-  // two mirrored files is what gives search engines and social-share
-  // bots a distinct, correct <head> per language without needing JS.
+  // Language is fixed per static file (this one is Swedish, served at
+  // "/sv") rather than runtime-switchable — see the mirrored English
+  // file "Fortis Anima Website.dc.html" at "/". This DC runtime
+  // re-fetches the *current* document's own raw source to build the
+  // template (see boot() in support.js), so a single shared file can't
+  // serve genuinely different raw HTML per language; two mirrored files
+  // is what gives search engines and social-share bots a distinct,
+  // correct <head> per language without needing JS.
   //
-  // IMPORTANT: sv.html is a structural mirror of this file. Any change
-  // to markup, styles or behavior (not just copy) must be applied to
-  // BOTH files, or they will drift out of sync.
+  // IMPORTANT: this file is a structural mirror of the English one.
+  // Any change to markup, styles or behavior (not just copy) must be
+  // applied to BOTH files, or they will drift out of sync.
   state = {
     iconsReady: false,
-    lang: 'en',
+    lang: 'sv',
   };
 
   _setAboutPhotoAlt(lang) {
