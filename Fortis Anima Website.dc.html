@@ -205,6 +205,45 @@
     .contact-card-sheen::after { content: ""; position: absolute; top: -30%; left: -60%; width: 35%; height: 160%; background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 65%, transparent 100%); transform: translateX(-20%) rotate(8deg); opacity: 0; }
     @media (prefers-reduced-motion: no-preference) { .contact-card-sheen.contact-sheen-play::after { animation: svcSheenSweep 850ms cubic-bezier(0.16,1,0.3,1); } }
     .contact-icon { border-radius: 50%; transition: border-color 350ms var(--ease-out), background 350ms var(--ease-out); }
+    /* Contact card tree icon: same masked gold-shimmer technique as the
+       hero tree (see .hero-tree-glow), but a one-shot sweep triggered by
+       IntersectionObserver when the card scrolls into view, rather than a
+       continuous scroll-position tie — @property registers --csweep as an
+       animatable <percentage> so the keyframe actually interpolates instead
+       of snapping discretely. */
+    @property --csweep {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: -20%;
+    }
+    .contact-tree-glow {
+      -webkit-mask-image: url('uploads/Fortis Anima Icon-25aa6af1.png');
+      mask-image: url('uploads/Fortis Anima Icon-25aa6af1.png');
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      filter: blur(3px);
+      background: linear-gradient(to top,
+        transparent 0%,
+        transparent calc(var(--csweep) - 26%),
+        rgba(176,138,79,0) calc(var(--csweep) - 14%),
+        rgba(200,169,106,0.85) calc(var(--csweep) - 4%),
+        rgba(247,238,214,0.95) var(--csweep),
+        rgba(200,169,106,0.85) calc(var(--csweep) + 4%),
+        rgba(176,138,79,0) calc(var(--csweep) + 14%),
+        transparent calc(var(--csweep) + 26%),
+        transparent 100%);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .contact-tree-glow.contact-tree-glow-play { animation: contactTreeSweep 1500ms cubic-bezier(0.16,1,0.3,1); }
+    }
+    @keyframes contactTreeSweep {
+      from { --csweep: -20%; }
+      to { --csweep: 130%; }
+    }
     @media (max-width: 1180px) { #top [data-hero-side] { display: none !important; } }
     @keyframes heroScroll { 0% { opacity:0; transform:translateY(-2px); } 30% { opacity:1; } 100% { opacity:0; transform:translateY(12px); } }
     @keyframes nodeGlow {
@@ -498,6 +537,7 @@
 
       <div data-reveal="120" class="contact-card" style="border-radius:var(--radius-card)">
         <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);height:auto;opacity:0.08;pointer-events:none">
+        <div aria-hidden="true" class="contact-tree-glow" style="position:absolute;bottom:-70px;right:-70px;width:min(320px,60%);aspect-ratio:915/917;pointer-events:none"></div>
         <span aria-hidden="true" class="contact-card-glow"></span>
         <span aria-hidden="true" class="contact-card-sheen"></span>
         <span aria-hidden="true" class="contact-card-edge"></span>
@@ -781,6 +821,22 @@ class Component extends DCLogic {
         this._onTreeScroll = () => { if (raf == null) raf = requestAnimationFrame(update); };
         update();
         window.addEventListener('scroll', this._onTreeScroll, { passive: true });
+      }
+
+      // Contact card tree icon: same gold shimmer, but played once as a
+      // one-shot sweep when the card first scrolls into view, matching
+      // "arriving" at the section rather than tracking scroll continuously.
+      const contactGlow = document.querySelector('.contact-tree-glow');
+      if (contactGlow) {
+        this._ctio = new IntersectionObserver((entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              contactGlow.classList.add('contact-tree-glow-play');
+              this._ctio.disconnect();
+            }
+          });
+        }, { threshold: 0.3 });
+        this._ctio.observe(contactGlow.closest('.contact-card') || contactGlow);
       }
     }
 
@@ -1066,6 +1122,7 @@ class Component extends DCLogic {
     if (this._pio) this._pio.disconnect();
     if (this._onHeader) window.removeEventListener('scroll', this._onHeader);
     if (this._onTreeScroll) window.removeEventListener('scroll', this._onTreeScroll);
+    if (this._ctio) this._ctio.disconnect();
     const menuToggle = document.getElementById('menu-toggle');
     const navLinksEl = document.getElementById('nav-links');
     if (menuToggle && this._onMenuToggle) menuToggle.removeEventListener('click', this._onMenuToggle);
