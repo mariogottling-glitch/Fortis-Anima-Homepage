@@ -215,7 +215,36 @@
     #process-track > li:last-child > div:first-child > span:first-child > span { background: rgba(176,138,79,0.20); }
     @media (prefers-reduced-motion: reduce) { #process-track > li:last-child > div:first-child > span:first-child { animation: none; box-shadow: 0 0 14px 2px rgba(176,138,79,0.4); } }
     [data-hero] { opacity: 0; transform: translateY(24px); filter: blur(6px); }
-    @media (max-width: 860px) { #top [data-hero-tree] { opacity: 0.05 !important; right: -30% !important; height: 78% !important; } }
+    @media (max-width: 860px) {
+      #top [data-hero-tree] { opacity: 0.05 !important; right: -30% !important; height: 78% !important; }
+      #top [data-hero-tree-glow] { right: -30% !important; height: 78% !important; }
+    }
+    /* Hero tree icon: gold shimmer traced to the icon's own silhouette via
+       a CSS mask on the same PNG (masks use the image's alpha channel by
+       default), so the glow band only ever shows through the tree's actual
+       contours. --sweep is driven from JS as a percentage tied to scroll
+       progress through the hero section — see componentDidMount. */
+    .hero-tree-glow {
+      -webkit-mask-image: url('uploads/Fortis Anima Icon-25aa6af1.png');
+      mask-image: url('uploads/Fortis Anima Icon-25aa6af1.png');
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      filter: blur(3px);
+      background: linear-gradient(to top,
+        transparent 0%,
+        transparent calc(var(--sweep,-20%) - 26%),
+        rgba(176,138,79,0) calc(var(--sweep,-20%) - 14%),
+        rgba(200,169,106,0.85) calc(var(--sweep,-20%) - 4%),
+        rgba(247,238,214,0.95) var(--sweep,-20%),
+        rgba(200,169,106,0.85) calc(var(--sweep,-20%) + 4%),
+        rgba(176,138,79,0) calc(var(--sweep,-20%) + 14%),
+        transparent calc(var(--sweep,-20%) + 26%),
+        transparent 100%);
+    }
     .hero-in [data-hero] { opacity: 1; transform: none; filter: none; transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out), filter 700ms var(--ease-out); }
     .hero-in [data-hero="1"] { transition-delay: 60ms; }
     .hero-in [data-hero="2"] { transition-delay: 160ms; }
@@ -260,6 +289,7 @@
 
     <!-- faint oversized brand tree, bleeding off the right edge -->
     <img src="uploads/Fortis Anima Icon-25aa6af1.png" alt="" aria-hidden="true" data-hero-tree="1" style="position:absolute;top:50%;right:clamp(-140px,-6vw,-40px);transform:translateY(-50%);height:min(118%,1180px);width:auto;opacity:0.07;pointer-events:none;z-index:-1;filter:drop-shadow(0 0 40px rgba(0,0,0,0.15))">
+    <div aria-hidden="true" data-hero-tree-glow="1" class="hero-tree-glow" style="position:absolute;top:50%;right:clamp(-140px,-6vw,-40px);transform:translateY(-50%);height:min(118%,1180px);width:auto;aspect-ratio:915/917;pointer-events:none;z-index:-1"></div>
 
     <div style="position:relative;width:100%;max-width:var(--container);margin:0 auto;box-sizing:border-box;padding:clamp(48px,7vh,104px) clamp(20px,4vw,40px)">
       <div style="display:flex;flex-direction:column;gap:var(--space-4);align-items:flex-start;max-width:720px;width:100%">
@@ -733,6 +763,27 @@ class Component extends DCLogic {
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this._motion = (this.props.motion ?? true) && !reduce;
 
+    // Hero tree icon: gold shimmer swept up through the icon as the hero
+    // scrolls past, masked to the icon's own silhouette (see .hero-tree-glow
+    // CSS). Entirely scroll-driven movement, so it's skipped outright under
+    // reduced motion rather than gated per-frame.
+    if (this._motion) {
+      const treeGlow = document.querySelector('.hero-tree-glow');
+      const heroSection = document.getElementById('top');
+      if (treeGlow && heroSection) {
+        let raf = null;
+        const update = () => {
+          raf = null;
+          const r = heroSection.getBoundingClientRect();
+          const p = Math.min(1, Math.max(0, -r.top / r.height));
+          treeGlow.style.setProperty('--sweep', (p * 130 - 15).toFixed(1) + '%');
+        };
+        this._onTreeScroll = () => { if (raf == null) raf = requestAnimationFrame(update); };
+        update();
+        window.addEventListener('scroll', this._onTreeScroll, { passive: true });
+      }
+    }
+
     // "Why us" panels: soft lift + cursor-tracked spotlight + one-shot sheen,
     // same JS-driven-descendant-state approach as the service cards below
     // (and the same reason: plain CSS descendant hover rules don't reliably
@@ -1014,6 +1065,7 @@ class Component extends DCLogic {
     if (this._arm) window.removeEventListener('load', this._arm);
     if (this._pio) this._pio.disconnect();
     if (this._onHeader) window.removeEventListener('scroll', this._onHeader);
+    if (this._onTreeScroll) window.removeEventListener('scroll', this._onTreeScroll);
     const menuToggle = document.getElementById('menu-toggle');
     const navLinksEl = document.getElementById('nav-links');
     if (menuToggle && this._onMenuToggle) menuToggle.removeEventListener('click', this._onMenuToggle);
