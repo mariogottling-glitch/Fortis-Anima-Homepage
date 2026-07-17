@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/:path*", "has": [{ "type": "host", "value": "fortis-anima.com" }], "destination": "https://www.fortis-anima.com/:path*", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/Fortis Anima Website.dc.html" },
     { "source": "/sv", "destination": "/sv.html" },
